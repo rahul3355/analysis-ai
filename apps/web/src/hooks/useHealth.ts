@@ -2,23 +2,16 @@
 
 import { useState, useEffect } from "react";
 
-export type HealthState = "checking" | "starting" | "active" | "inactive";
-
-export interface ServiceChecks {
-  pinecone: string;
-  openrouter: string;
-}
+export type HealthState = "checking" | "active" | "inactive";
 
 export interface HealthData {
-  status: "active" | "starting" | "inactive";
-  message: string;
+  status: string;
   uptime: number;
-  estimatedReadySec: number;
-  checks: ServiceChecks;
+  startedAt: string;
 }
 
-const STARTING_INTERVAL_MS = 4000;
 const ACTIVE_INTERVAL_MS = 60000;
+const INACTIVE_INTERVAL_MS = 4000;
 const FETCH_TIMEOUT_MS = 8000;
 
 export function useHealth() {
@@ -32,7 +25,7 @@ export function useHealth() {
     const doFetch = (): Promise<HealthData> => {
       const controller = new AbortController();
       const t = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-      return fetch("/api/health/services", { cache: "no-store", signal: controller.signal })
+      return fetch("/api/health", { cache: "no-store", signal: controller.signal })
         .then((res) => {
           if (!res.ok) throw new Error("health failed");
           return res.json() as Promise<HealthData>;
@@ -47,13 +40,14 @@ export function useHealth() {
           .then((json) => {
             if (cancelled) return;
             setData(json);
-            setState(json.status === "active" ? "active" : "starting");
-            schedule(json.status === "active" ? ACTIVE_INTERVAL_MS : STARTING_INTERVAL_MS);
+            setState("active");
+            schedule(ACTIVE_INTERVAL_MS);
           })
           .catch(() => {
             if (cancelled) return;
             setState("inactive");
-            schedule(STARTING_INTERVAL_MS);
+            setData(null);
+            schedule(INACTIVE_INTERVAL_MS);
           });
       }, delay);
     };
@@ -62,13 +56,14 @@ export function useHealth() {
       .then((json) => {
         if (cancelled) return;
         setData(json);
-        setState(json.status === "active" ? "active" : "starting");
-        schedule(json.status === "active" ? ACTIVE_INTERVAL_MS : STARTING_INTERVAL_MS);
+        setState("active");
+        schedule(ACTIVE_INTERVAL_MS);
       })
       .catch(() => {
         if (cancelled) return;
         setState("inactive");
-        schedule(STARTING_INTERVAL_MS);
+        setData(null);
+        schedule(INACTIVE_INTERVAL_MS);
       });
 
     return () => {
