@@ -216,8 +216,7 @@ export function ChatView({ documents }: ChatViewProps) {
             case "error": {
               const d = parsed.data as { message: string };
               throw new Error(d.message);
-            }
-            case "done": {
+            }            case "done": {
               markCompleted("generating");
               setPipelineStage("complete");
               setStatusMessage("");
@@ -259,13 +258,13 @@ export function ChatView({ documents }: ChatViewProps) {
             m.id === assistantId
               ? {
                   ...m,
-                  content: "Sorry, I encountered an error processing your request.",
+                  content: msg,
                 }
               : m
           )
         );
         setPipelineStage("error");
-        setStatusMessage("");
+        setStatusMessage(msg);
       }
     } finally {
       if (abortRef.current === abortController) {

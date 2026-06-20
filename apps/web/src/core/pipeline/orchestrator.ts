@@ -123,6 +123,26 @@ function checkAborted(signal?: AbortSignal): void {
   }
 }
 
+function mapErrorMessage(raw: string): string {
+  const lower = raw.toLowerCase();
+  if (lower.includes("does not support image input") || lower.includes("image input")) {
+    return "This question requires image analysis, which the current AI model doesn't support. Please try a text-based question.";
+  }
+  if (lower.includes("insufficient credits") || lower.includes("402")) {
+    return "The AI service is out of credits. Please contact support.";
+  }
+  if (lower.includes("authentication failed") || lower.includes("401") || lower.includes("403")) {
+    return "The AI service credentials are invalid. Please contact support.";
+  }
+  if (lower.includes("rate limit") || lower.includes("429")) {
+    return "The AI service is busy. Please wait a moment and try again.";
+  }
+  if (lower.includes("empty streaming response") || lower.includes("empty response")) {
+    return "The AI service returned no response. Please try rephrasing your question.";
+  }
+  return raw;
+}
+
 function isRowsEmpty(rows: Record<string, unknown>[]): boolean {
   return (
     rows.length === 0 ||
@@ -324,10 +344,10 @@ export async function orchestrate(
     writer.status("complete", "Done");
     writer.done();
   } catch (err) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error("Orchestration failed:", msg);
+    const rawMsg = err instanceof Error ? err.message : String(err);
+    console.error("Orchestration failed:", rawMsg);
     if (!writer.closed) {
-      writer.error(msg);
+      writer.error(mapErrorMessage(rawMsg));
       writer.done();
     }
   }

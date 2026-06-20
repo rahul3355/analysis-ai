@@ -72,10 +72,13 @@ export async function POST(request: NextRequest) {
           );
         } catch (err) {
           if (!writer.closed) {
-            const msg =
+            const raw =
               err instanceof Error ? err.message : "An unexpected error occurred";
-            console.error(`[${requestId}] Stream error (${Date.now() - startTime}ms):`, msg);
-            writer.error(msg);
+            const userMsg = raw.toLowerCase().includes("image input")
+              ? "This question requires image analysis, which the current AI model doesn't support. Please try a text-based question."
+              : raw;
+            console.error(`[${requestId}] Stream error (${Date.now() - startTime}ms):`, raw);
+            writer.error(userMsg);
             writer.done();
           }
         }

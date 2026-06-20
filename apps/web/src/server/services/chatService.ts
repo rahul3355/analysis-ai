@@ -257,13 +257,18 @@ export async function processChatWithMessagesStream(
           try {
             const chunk = JSON.parse(jsonStr) as {
               choices?: Array<{ delta?: { content?: string } }>;
+              error?: { message?: string };
             };
+            if (chunk.error?.message) {
+              throw new ServiceError("LLM_ERROR", chunk.error.message, 502);
+            }
             const content = chunk?.choices?.[0]?.delta?.content;
             if (content) {
               callbacks.onToken(content);
               completeText += content;
             }
-          } catch {
+          } catch (parseErr) {
+            if (parseErr instanceof ServiceError) throw parseErr;
             // Skip malformed chunks
           }
         }
