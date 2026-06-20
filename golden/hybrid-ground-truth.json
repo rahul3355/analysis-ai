@@ -1,0 +1,436 @@
+[
+  {
+    "question_id": "hyb-01",
+    "question": "How much revenue did Hoka generate, and how many units of the Hoka Clifton 9 were sold?",
+    "doc_source": "doc5-running-deep-dive.md:33-34, 67-68",
+    "doc_fact": "Hoka generated £20M in running footwear revenue in H1 FY2027 (8.8% of category). Hoka Clifton 9 generated £4.9M across approximately 38,000 pairs at £130 RRP. Hoka is currently in 85 stores (line 33: 'Hoka is still relatively under-distributed in JD, currently in 85 stores').",
+    "bq_queries": [
+      "SELECT p.brand, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.brand = 'Hoka' GROUP BY p.brand",
+      "SELECT p.product_name, SUM(oi.quantity) as units_sold, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'Hoka Clifton 9' GROUP BY p.product_name"
+    ],
+    "bq_results": {
+      "hoka_brand_revenue": 260.0,
+      "clifton_9_units_sold": 2,
+      "clifton_9_revenue": 260.0
+    },
+    "corrected_ground_truth": "Document reports Hoka running footwear revenue of £20M in H1 FY2027 with the Clifton 9 generating £4.9M across ~38,000 pairs at £130 RRP across 85 stores. BQ shows actual Hoka revenue of £260.00 with the Hoka Clifton 9 selling 2 units for £260.00 across all delivered/shipped orders.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-02",
+    "question": "What was Nike's actual gross margin percentage, and how does this compare to the planned margin in the Nike agreement?",
+    "doc_source": "doc1-annual-sales-plan.md:79; doc2-nike-agreement.md:122-130",
+    "doc_fact": "Doc1 (line 79): Planned gross margin on Nike product is 46.8%. Doc2 (lines 122-130): Nike product tiers have varying margins: Lifestyle (42% of Nike rev) 48-50%, Running (28%) 46-48%, Training (12%) 46-47%, Football (10%) 45-47%, Jordan Brand (8%) 43-45%. Doc2 line 35: Trade discount on lifestyle product is 49% off RRP, running 47%, Jordan 44%.",
+    "bq_queries": [
+      "SELECT p.brand, ROUND(SUM(oi.sale_price * oi.quantity) - SUM(oi.cost * oi.quantity), 2) as gross_profit, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue, ROUND((SUM(oi.sale_price * oi.quantity) - SUM(oi.cost * oi.quantity)) / SUM(oi.sale_price * oi.quantity) * 100, 2) as margin_pct FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.brand = 'Nike' GROUP BY p.brand"
+    ],
+    "bq_results": {
+      "nike_revenue": 540.0,
+      "nike_gross_profit": 245.0,
+      "nike_margin_pct": 45.37
+    },
+    "corrected_ground_truth": "Document shows planned Nike gross margin of 46.8% (doc1) with product tier margins ranging from 43-50% (doc2) and trade discounts of 44-49% off RRP depending on tier. BQ shows actual Nike gross margin of 45.37% (£245.00 gross profit on £540.00 revenue), which is 1.43 percentage points below the 46.8% plan.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-03",
+    "question": "What is the online penetration percentage, and how does it compare to the plan?",
+    "doc_source": "doc1-annual-sales-plan.md:17; doc4-q3-performance.md:17",
+    "doc_fact": "Doc1 (line 17): Online penetration is targeted at 33.0% of total UK revenue for FY2027, up from 32.0% in FY2026. Doc4 (line 17): Q3 online revenue was £435M, or 32.0% of total revenue, in line with the full-year target.",
+    "bq_queries": [
+      "SELECT ROUND(SUM(CASE WHEN o.channel = 'online' THEN oi.sale_price * oi.quantity ELSE 0 END), 2) as online_revenue, ROUND(SUM(oi.sale_price * oi.quantity), 2) as total_revenue, ROUND(SUM(CASE WHEN o.channel = 'online' THEN oi.sale_price * oi.quantity ELSE 0 END) / SUM(oi.sale_price * oi.quantity) * 100, 2) as online_pct FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')"
+    ],
+    "bq_results": {
+      "online_revenue": 1360.0,
+      "total_revenue": 2160.0,
+      "online_pct": 62.96
+    },
+    "corrected_ground_truth": "Document targets 33.0% online penetration for FY2027 (doc1) with Q3 at 32.0% (doc4). BQ shows actual online penetration of 62.96% (£1,360.00 online out of £2,160.00 total), significantly above plan due to the mock data having a higher proportion of online orders (12 of 17 delivered/shipped orders are online).",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-04",
+    "question": "How many units of the Nike Air Force 1 Low were sold, and what was the target volume?",
+    "doc_source": "doc3-back-to-school.md:25; doc4-q3-performance.md:93",
+    "doc_fact": "Doc3 (line 25): Nike Air Force 1 Low is the single most important SKU for the BTS campaign. Target volume of 45,000 pairs at £100 RRP. Doc4 (line 93): The Air Force 1 Low was the #1 product by revenue in Q3 with £54.0M across approximately 540,000 pairs.",
+    "bq_queries": [
+      "SELECT p.product_name, SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'Nike Air Force 1 Low' GROUP BY p.product_name"
+    ],
+    "bq_results": {
+      "units_sold": 3
+    },
+    "corrected_ground_truth": "Document targets 45,000 pairs for the BTS campaign (doc3) and reports 540,000 pairs/£54M in Q3 (doc4) at £100 RRP. BQ shows 3 units sold across all delivered/shipped orders at £100 each (ORD-002 qty 2, ORD-014 qty 1).",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-05",
+    "question": "How many units of The North Face Nuptse Jacket were sold, and how does this compare to the BTS campaign target?",
+    "doc_source": "doc3-back-to-school.md:39; doc4-q3-performance.md:99",
+    "doc_fact": "Doc3 (line 39): The North Face Nuptse Jacket BTS target volume of 8,000 units at £265 RRP. Doc4 (line 99): Was the #4 product in Q3 with £30.0M across approximately 113,000 units. Doc1 (line 91): The Nuptse jacket is consistently one of the top 10 selling SKUs across the entire business.",
+    "bq_queries": [
+      "SELECT p.product_name, SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'The North Face Nuptse Jacket' GROUP BY p.product_name"
+    ],
+    "bq_results": {
+      "units_sold": 2
+    },
+    "corrected_ground_truth": "Document targets 8,000 units for the BTS campaign (doc3) and reports 113,000 units/£30M in Q3 (doc4) at £265 RRP. BQ shows 2 units sold across all delivered/shipped orders (ORD-005 shipped qty 1, ORD-016 delivered qty 1).",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-06",
+    "question": "How many orders were placed in Scotland, and what was the Scotland revenue gap in Q3?",
+    "doc_source": "doc4-q3-performance.md:43-44, 131",
+    "doc_fact": "Doc4 (line 43-44): Scotland was the weakest region at 92.5% of plan. Total revenue was £128M against plan of £138M, a £10M gap. LFL sales declined 1.2%. Causes: Dundee/Inverness refurb closures (6 combined trading weeks) and BTS stock allocation misaligned with Scottish demand (undersupply of UK10+ sizes).",
+    "bq_queries": [
+      "SELECT o.region, COUNT(*) as count FROM analysis-ai-499819.jd_sports.orders o WHERE o.status IN ('delivered', 'shipped') AND o.region = 'Scotland' GROUP BY o.region"
+    ],
+    "bq_results": {
+      "scotland_orders_count": 6
+    },
+    "corrected_ground_truth": "Document reports Scotland Q3 revenue of £128M vs £138M plan, a £10M gap at 92.5% of plan (doc4). BQ shows 6 delivered/shipped orders from Scotland (ORD-001, ORD-004, ORD-008, ORD-014, ORD-018, ORD-020), the most of any region.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-07",
+    "question": "What is the online AOV, and how does it compare to the plan?",
+    "doc_source": "doc1-annual-sales-plan.md:45; doc4-q3-performance.md:61",
+    "doc_fact": "Doc1 (line 45): Online AOV is targeted at £82.00 with a conversion rate of 5.0%. Doc4 (line 61): Online AOV was £84.50 in Q3, up from £82.00 in the prior year quarter. Click and collect accounted for 24% of online orders.",
+    "bq_queries": [
+      "SELECT ROUND(SUM(oi.sale_price * oi.quantity) / COUNT(DISTINCT o.order_id), 2) as online_aov FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.channel = 'online' AND o.status IN ('delivered', 'shipped')"
+    ],
+    "bq_results": {
+      "online_aov": 113.33
+    },
+    "corrected_ground_truth": "Document targets £82.00 online AOV for FY2027 (doc1) with Q3 at £84.50 (doc4). BQ shows actual online AOV of £113.33 (total online revenue £1,360.00 across 12 distinct online orders), above plan due to the mock data mix.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-08",
+    "question": "What is the total store revenue, and how does this compare to the plan?",
+    "doc_source": "doc4-q3-performance.md:59",
+    "doc_fact": "Doc4 (line 59): Store revenue was £925M in Q3, representing 68.0% of total quarterly revenue and growth of 2.8% YoY. Doc1 (line 33): Stores represent 68% of revenue in the annual plan.",
+    "bq_queries": [
+      "SELECT ROUND(SUM(oi.sale_price * oi.quantity), 2) as store_revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.channel = 'store' AND o.status IN ('delivered', 'shipped')"
+    ],
+    "bq_results": {
+      "store_revenue": 800.0
+    },
+    "corrected_ground_truth": "Document reports Q3 store revenue of £925M at 68% of total revenue (doc4) and annual plan target of 68% of £5.3B for stores (doc1). BQ shows actual store revenue of £800.00 (ORD-002 £200, ORD-005 £265, ORD-008 £155, ORD-012 £60, ORD-017 £120) across 5 store orders.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-09",
+    "question": "In how many stores is Hoka currently available, and how many Hoka units were sold?",
+    "doc_source": "doc5-running-deep-dive.md:33, 67-68, 137",
+    "doc_fact": "Doc5 (line 33): 'Hoka is still relatively under-distributed in JD, currently in 85 stores.' Line 67-68: Hoka Clifton 9 sold approximately 38,000 pairs in H1 with revenue of £4.9M. Line 137: Recommendation to expand Hoka distribution from 85 stores to 200 stores.",
+    "bq_queries": [
+      "SELECT p.product_name, SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.brand = 'Hoka' GROUP BY p.product_name"
+    ],
+    "bq_results": {
+      "hoka_clifton_9_units_sold": 2
+    },
+    "corrected_ground_truth": "Document states Hoka is available in 85 stores (doc5) with a recommendation to expand to 200 stores. The Clifton 9 sold ~38,000 pairs/£4.9M in H1. BQ shows Hoka Clifton 9 sold 2 units across all delivered/shipped orders (ORD-004 qty 1, ORD-011 qty 1).",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-10",
+    "question": "How many Under Armour Backpacks were sold, and how many were returned?",
+    "doc_source": "doc3-back-to-school.md:41",
+    "doc_fact": "Doc3 (line 41): Under Armour Backpack target volume of 25,000 units at £45 RRP for the BTS campaign. It's an essential accessory for school and university.",
+    "bq_queries": [
+      "SELECT SUM(oi.quantity) as total_sold, COUNTIF(oi.returned = true) as returned_count FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'Under Armour Backpack'"
+    ],
+    "bq_results": {
+      "total_sold": 2,
+      "returned_count": 1
+    },
+    "corrected_ground_truth": "Document targets 25,000 units at £45 RRP for the BTS campaign (doc3). BQ shows 2 units sold (ORD-013 qty 1, ORD-020 qty 1) with 1 returned (ORD-020/ITEM-020, return_reason: 'not_as_expected'), giving a 50% return rate for this product.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-11",
+    "question": "What is the RRP and cost price of the Adidas Gazelle, and how many units were sold?",
+    "doc_source": "doc3-back-to-school.md:27; doc4-q3-performance.md:95",
+    "doc_fact": "Doc3 (line 27): Adidas Gazelle £85 RRP, target volume 38,000 pairs for BTS campaign. Doc4 (line 95): #2 product in Q3 with £42.0M across approximately 494,000 pairs. Colourway expansion into pastel shades was well received.",
+    "bq_queries": [
+      "SELECT p.rrp, p.cost_price FROM analysis-ai-499819.jd_sports.products p WHERE p.product_name = 'Adidas Gazelle'",
+      "SELECT SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'Adidas Gazelle'"
+    ],
+    "bq_results": {
+      "rrp": 85.0,
+      "cost_price": 46.0,
+      "units_sold": 1
+    },
+    "corrected_ground_truth": "Document confirms RRP of £85 (doc3) with Q3 sales of 494,000 pairs/£42M (doc4). BQ confirms RRP of £85.00 and cost price of £46.00. Units sold: 1 (ORD-006).",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-12",
+    "question": "How many Nike Pegasus 41 were sold, and what is the current stock level at Manchester DC?",
+    "doc_source": "doc5-running-deep-dive.md:27, 63; doc5-running-deep-dive.md:115",
+    "doc_fact": "Doc5 (line 63): Pegasus 41 was the #1 running SKU in H1 with £8.2M across ~68,000 pairs at £120 RRP. Line 27: Pegasus franchise is cornerstone of Nike running range. Line 115: Priced at £120 at JD, at parity with Nike.com, 4% above Sports Direct at £115.",
+    "bq_queries": [
+      "SELECT SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'Nike Pegasus 41'",
+      "SELECT i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Nike Pegasus 41' AND i.distribution_center = 'Manchester'"
+    ],
+    "bq_results": {
+      "units_sold": 2,
+      "manchester_stock_level": 1200
+    },
+    "corrected_ground_truth": "Document reports Pegasus 41 sold ~68,000 pairs/£8.2M in H1 at £120 RRP (doc5). BQ shows 2 units sold (ORD-001 qty 1, ORD-017 qty 1) with 1,200 units in stock at Manchester DC and a reorder point of 200.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-13",
+    "question": "How many New Balance 530 were sold, and what is the current stock level at Manchester DC?",
+    "doc_source": "doc4-q3-performance.md:111; doc1-annual-sales-plan.md:87",
+    "doc_fact": "Doc4 (line 111): New Balance 530 was the #10 product in Q3 with £15.0M across ~176,000 pairs. Fastest growing SKU in the top 10, up 45% YoY. Doc1 (line 87): New Balance has seen 18% YoY growth in JD UK.",
+    "bq_queries": [
+      "SELECT SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'New Balance 530'",
+      "SELECT i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'New Balance 530' AND i.distribution_center = 'Manchester'"
+    ],
+    "bq_results": {
+      "units_sold": 2,
+      "manchester_stock_level": 900
+    },
+    "corrected_ground_truth": "Document reports NB 530 sold ~176,000 pairs/£15M in Q3, up 45% YoY (doc4) with NB growing 18% overall (doc1). BQ shows 2 units sold (ORD-009 qty 1, ORD-018 qty 1) with 900 units in stock at Manchester DC and a reorder point of 150.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-14",
+    "question": "What percentage of total revenue does Adidas represent, and how does this compare to the plan?",
+    "doc_source": "doc1-annual-sales-plan.md:82; doc4-q3-performance.md:79",
+    "doc_fact": "Doc1 (line 82): Adidas is 25% of revenue at £1.33B planned. Doc4 (line 79): Adidas revenue was £354M, representing 26.0% of Q3 revenue. Gross margin 47.5%, 0.3pp above plan. Gazelle and Samba franchises performed strongly with sell-through above 85%.",
+    "bq_queries": [
+      "SELECT ROUND(SUM(CASE WHEN p.brand = 'Adidas' THEN oi.sale_price * oi.quantity ELSE 0 END), 2) as adidas_revenue, ROUND(SUM(oi.sale_price * oi.quantity), 2) as total_revenue, ROUND(SUM(CASE WHEN p.brand = 'Adidas' THEN oi.sale_price * oi.quantity ELSE 0 END) / SUM(oi.sale_price * oi.quantity) * 100, 2) as adidas_pct FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')"
+    ],
+    "bq_results": {
+      "adidas_revenue": 365.0,
+      "total_revenue": 2160.0,
+      "adidas_pct": 16.9
+    },
+    "corrected_ground_truth": "Document plans Adidas at 25% of revenue/£1.33B (doc1) with Q3 at 26%/£354M (doc4). BQ shows Adidas at 16.9% (£365.00 of £2,160.00), below the 25% target. Adidas revenue in BQ comes from Ultraboost Light (ORD-003 £140, ORD-015 £140) and Gazelle (ORD-006 £85).",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-15",
+    "question": "Which brand had the most returns in Scotland?",
+    "doc_source": "doc4-q3-performance.md:43-44, 131; doc5-running-deep-dive.md:91-96",
+    "doc_fact": "Doc4 (lines 43-44, 131): Scotland underperformed at 92.5% of plan (£10M gap). Stock allocation misaligned with Scottish demand. Doc5 (lines 91-96): Scotland's size curve shifts significantly larger (UK10+ accounts for 30%+ of sales vs 26.3% nationally). H1 issues partly attributed to oversupply of UK8/UK9 and undersupply of UK10/UK11. No specific return data by brand in Scotland in documents.",
+    "bq_queries": [
+      "SELECT o.region, p.brand, p.product_name, COUNTIF(oi.returned = true) as returns_count FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND oi.returned = true GROUP BY o.region, p.brand, p.product_name"
+    ],
+    "bq_results": {
+      "scotland_returns": [
+        {
+          "brand": "Under Armour",
+          "product_name": "Under Armour Backpack",
+          "returns_count": 1
+        }
+      ],
+      "all_returns": [
+        {
+          "brand": "Under Armour",
+          "product_name": "Under Armour Backpack",
+          "region": "Scotland",
+          "returns_count": 1
+        }
+      ]
+    },
+    "corrected_ground_truth": "Document notes Scotland's underperformance and stock allocation issues (doc4) and size curve misalignment (doc5) but does not specify returns by brand. BQ shows only 1 returned item across all delivered/shipped orders: Under Armour Backpack (Under Armour brand) in Scotland via order ORD-020/ITEM-020 (return_reason: 'not_as_expected'). Under Armour is therefore the only brand with returns in Scotland.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-16",
+    "question": "What is the gross margin percentage for the Running category?",
+    "doc_source": "doc5-running-deep-dive.md:19, 101-107",
+    "doc_fact": "Doc5 (line 19): Running footwear category gross margin was 44.0% in H1, 0.5pp below footwear average of 44.5%. Line 101-107: Full-price sell-through rate is 68% (vs 82% for lifestyle). Average discount depth on promoted running shoes is 24% (vs 21% footwear average). Brand margins vary: ASICS 46%, Nike running 45%, Hoka 44.5%, Adidas running 43%.",
+    "bq_queries": [
+      "SELECT ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue, ROUND(SUM(oi.sale_price * oi.quantity) - SUM(oi.cost * oi.quantity), 2) as gross_profit, ROUND((SUM(oi.sale_price * oi.quantity) - SUM(oi.cost * oi.quantity)) / SUM(oi.sale_price * oi.quantity) * 100, 2) as margin_pct FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.category = 'Running'"
+    ],
+    "bq_results": {
+      "running_revenue": 935.0,
+      "running_gross_profit": 420.0,
+      "running_margin_pct": 44.92
+    },
+    "corrected_ground_truth": "Document reports running footwear margin at 44.0% for H1 (doc5). BQ shows running category margin at 44.92% (£420.00 gross profit on £935.00 revenue). BQ running products: Nike Pegasus 41 (cost 65, sale 120), Adidas Ultraboost Light (cost 78, sale 140), Hoka Clifton 9 (cost 72, sale 130), ASICS Gel Kayano 31 (cost 85, sale 155).",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-17",
+    "question": "What is the store AOV?",
+    "doc_source": "doc4-q3-performance.md:59, 117",
+    "doc_fact": "Doc4 (line 59): Store average transaction value was £74.50, up from £72.00 in prior year. Line 117: Average transaction value in stores was £74.50 against plan of £73.00. Units per transaction was 1.9.",
+    "bq_queries": [
+      "SELECT ROUND(SUM(oi.sale_price * oi.quantity) / COUNT(DISTINCT o.order_id), 2) as store_aov FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.channel = 'store' AND o.status IN ('delivered', 'shipped')"
+    ],
+    "bq_results": {
+      "store_aov": 160.0
+    },
+    "corrected_ground_truth": "Document reports store ATV of £74.50 in Q3 against £73.00 plan (doc4). BQ shows store AOV of £160.00 (total store revenue £800.00 across 5 distinct store orders: ORD-002 £200, ORD-005 £265, ORD-008 £155, ORD-012 £60, ORD-017 £120). BQ figure is higher due to the mock data including £265 Nuptse Jacket and £200 AF1 orders in store channel.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-18",
+    "question": "How many Converse Chuck Taylor were sold, and what is the stock level at Manchester DC?",
+    "doc_source": "doc3-back-to-school.md:31; doc4-q3-performance.md:107",
+    "doc_fact": "Doc3 (line 31): Converse Chuck Taylor target 28,000 pairs for BTS at £60 RRP. Doc4 (line 107): #8 product in Q3 with £19.0M across approximately 317,000 pairs. Strong BTS performance.",
+    "bq_queries": [
+      "SELECT SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'Converse Chuck Taylor'",
+      "SELECT i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Converse Chuck Taylor' AND i.distribution_center = 'Manchester'"
+    ],
+    "bq_results": {
+      "units_sold": 1,
+      "manchester_stock_level": 2500
+    },
+    "corrected_ground_truth": "Document targets 28,000 pairs for BTS (doc3) and reports 317,000 pairs/£19M in Q3 (doc4) at £60 RRP. BQ shows 1 unit sold (ORD-012) with 2,500 units in stock at Manchester DC (the highest stock level of any product) and a reorder point of 400.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-19",
+    "question": "How many Nike Tech Fleece Hoodies were sold, and what is the stock level at Glasgow DC?",
+    "doc_source": "doc3-back-to-school.md:35; doc4-q3-performance.md:101",
+    "doc_fact": "Doc3 (line 35): Nike Tech Fleece Full Zip Hoodie target 18,000 units for BTS at £120 RRP. Doc4 (line 101): #5 product in Q3 with £26.0M across approximately 217,000 units. Consistent demand throughout the quarter.",
+    "bq_queries": [
+      "SELECT SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'Nike Tech Fleece Hoodie'",
+      "SELECT i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Nike Tech Fleece Hoodie' AND i.distribution_center = 'Glasgow'"
+    ],
+    "bq_results": {
+      "units_sold": 0,
+      "glasgow_stock_level": 450
+    },
+    "corrected_ground_truth": "Document targets 18,000 units for BTS (doc3) and reports 217,000 units/£26M in Q3 (doc4) at £120 RRP. BQ shows 0 units sold across delivered/shipped orders (the only order containing this product, ORD-010, was cancelled). Stock level at Glasgow DC is 450 units with a reorder point of 100.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-20",
+    "question": "What is the gross margin percentage for the Accessories category?",
+    "doc_source": "doc1-annual-sales-plan.md:69; doc4-q3-performance.md:71",
+    "doc_fact": "Doc1 (line 69): Accessories plan gross margin of 51.0%, target £371M revenue. Doc4 (line 71): Accessories gross margin was 51.5% in Q3, in line with plan. Revenue £95M, 7.0% of quarterly total. The 3 for 2 promotion drove strong volume in socks and caps.",
+    "bq_queries": [
+      "SELECT ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue, ROUND(SUM(oi.sale_price * oi.quantity) - SUM(oi.cost * oi.quantity), 2) as gross_profit, ROUND((SUM(oi.sale_price * oi.quantity) - SUM(oi.cost * oi.quantity)) / SUM(oi.sale_price * oi.quantity) * 100, 2) as margin_pct FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.category = 'Accessories'"
+    ],
+    "bq_results": {
+      "accessories_revenue": 90.0,
+      "accessories_gross_profit": 46.0,
+      "accessories_margin_pct": 51.11
+    },
+    "corrected_ground_truth": "Document reports accessories margin plan of 51.0% (doc1) and Q3 actual of 51.5% (doc4). BQ shows accessories margin of 51.11% (£46.00 gross profit on £90.00 revenue), closely matching both figures. The only accessories product in BQ is the Under Armour Backpack (cost £22, sale £45, qty 2 sold).",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-21",
+    "question": "How many ASICS Gel Kayano 31 were sold, and what is the stock level at Glasgow DC?",
+    "doc_source": "doc5-running-deep-dive.md:65-66, 117-118",
+    "doc_fact": "Doc5 (line 65-66): ASICS Gel Kayano 31 was the #2 running SKU in H1 with £5.6M across ~36,000 pairs at £155 RRP. It's the market leader in stability running shoes. Line 117-118: Priced at £155 at JD vs £160 at ASICS.com (3% advantage). Sports Direct does not stock this model.",
+    "bq_queries": [
+      "SELECT SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'ASICS Gel Kayano 31'",
+      "SELECT i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'ASICS Gel Kayano 31' AND i.distribution_center = 'Glasgow'"
+    ],
+    "bq_results": {
+      "units_sold": 1,
+      "glasgow_stock_level": 300
+    },
+    "corrected_ground_truth": "Document reports Gel Kayano 31 sold ~36,000 pairs/£5.6M in H1 at £155 RRP (doc5). BQ shows 1 unit sold (ORD-008) with 300 units in stock at Glasgow DC and a reorder point of 80.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-22",
+    "question": "How many Nike Dunk Low were sold, and what is the stock level at Manchester DC?",
+    "doc_source": "doc3-back-to-school.md:29; doc4-q3-performance.md:97",
+    "doc_fact": "Doc3 (line 29): Nike Dunk Low target 32,000 pairs for BTS at £105 RRP. Popular with secondary school age children. Doc4 (line 97): #3 product in Q3 with £39.0M across approximately 371,000 pairs. Continued strength across all age demographics.",
+    "bq_queries": [
+      "SELECT SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'Nike Dunk Low'",
+      "SELECT i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Nike Dunk Low' AND i.distribution_center = 'Manchester'"
+    ],
+    "bq_results": {
+      "units_sold": 0,
+      "manchester_stock_level": 1200
+    },
+    "corrected_ground_truth": "Document targets 32,000 pairs for BTS (doc3) and reports 371,000 pairs/£39M in Q3 (doc4) at £105 RRP. BQ shows 0 units sold across delivered/shipped orders (the only Dunk Low order, ORD-007, is still processing). Stock level at Manchester DC is 1,200 units with a reorder point of 200.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-23",
+    "question": "What is the reorder point for the Hoka Clifton 9 at Glasgow DC?",
+    "doc_source": "doc5-running-deep-dive.md:33, 67, 137",
+    "doc_fact": "Doc5 (line 33): Hoka is in 85 stores with significant expansion opportunity. Line 67: Hoka Clifton 9 sold ~38,000 pairs/£4.9M in H1 at £130 RRP. Line 137: Recommendation to expand distribution from 85 to 200 stores and negotiate increased allocation as supply constraints are the only barrier to growth.",
+    "bq_queries": [
+      "SELECT i.reorder_point FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Hoka Clifton 9' AND i.distribution_center = 'Glasgow'"
+    ],
+    "bq_results": {
+      "glasgow_reorder_point": 100
+    },
+    "corrected_ground_truth": "Document reports Hoka Clifton 9 at £130 RRP with ~38,000 pairs/£4.9M in H1, available in 85 stores (doc5). BQ shows the reorder point for Clifton 9 at Glasgow DC is 100 units, with current stock of 600 units and a 14-day lead time.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-24",
+    "question": "How many Adidas Gazelle were sold, and what is the reorder point at Manchester DC?",
+    "doc_source": "doc3-back-to-school.md:27; doc4-q3-performance.md:95",
+    "doc_fact": "Doc3 (line 27): Adidas Gazelle target 38,000 pairs for BTS at £85 RRP. Doc4 (line 95): #2 product in Q3 with £42.0M across approximately 494,000 pairs. Colourway expansion into pastel shades was well received. Adidas has a 12-day lead time for campaign stock (doc3 line 83).",
+    "bq_queries": [
+      "SELECT SUM(oi.quantity) as units_sold FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND p.product_name = 'Adidas Gazelle'",
+      "SELECT i.reorder_point FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Adidas Gazelle' AND i.distribution_center = 'Manchester'"
+    ],
+    "bq_results": {
+      "units_sold": 1,
+      "manchester_reorder_point": 250
+    },
+    "corrected_ground_truth": "Document targets 38,000 pairs for BTS (doc3) and reports 494,000 pairs/£42M in Q3 (doc4) at £85 RRP. BQ shows 1 unit sold (ORD-006) with a reorder point of 250 units at Manchester DC and current stock of 1,500 units.",
+    "confidence": "high",
+    "status": "correct"
+  },
+  {
+    "question_id": "hyb-25",
+    "question": "How many orders came through Meta/social channels?",
+    "doc_source": "doc3-back-to-school.md:65-66, 126",
+    "doc_fact": "Doc3 (line 65-66): Meta (Facebook and Instagram) accounts for £1.0M of the BTS media budget (26% of total £3.8M). Target ROAS is 5.0x. Line 126: Campaign target is blended ROAS of 5.0x across all channels. Line 72: Influencer partnerships account for £300k (8% of budget). No specific Meta-tagged orders mentioned in any document.",
+    "bq_queries": [
+      "SELECT e.traffic_source, COUNT(*) as purchase_count FROM analysis-ai-499819.jd_sports.events e WHERE e.event_type = 'purchase' GROUP BY e.traffic_source ORDER BY purchase_count DESC",
+      "SELECT user_id, traffic_source FROM analysis-ai-499819.jd_sports.users ORDER BY user_id"
+    ],
+    "bq_results": {
+      "purchase_events_by_traffic_source": {
+        "organic": 7,
+        "paid": 2,
+        "email": 1,
+        "referral": 1,
+        "social": 1
+      },
+      "users_by_traffic_source": {
+        "organic": 5,
+        "paid": 2,
+        "social": 1,
+        "referral": 1,
+        "email": 1
+      }
+    },
+    "corrected_ground_truth": "Document allocates £1.0M of BTS media budget to Meta (doc3) but does not specify a way to identify Meta-sourced orders in data. BQ events show 1 purchase with traffic_source='social' (EVT-018, user USR-007 who was acquired via social). There is no specific 'Meta' traffic source in BQ data — 'social' is the closest available category. The users table confirms USR-007 (Aberdeen, Scotland, age 18-24) was acquired via 'social' and has 1 delivered order (ORD-018). Total purchases by source: organic 7, paid 2, email 1, referral 1, social 1.",
+    "confidence": "medium",
+    "status": "correct"
+  }
+]

@@ -1,0 +1,41 @@
+{
+  "name": "analysis-ai",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "npm@10.9.3",
+  "description": "Internal BI assistant — chat with documents and BigQuery data with inline source citations",
+  "license": "MIT",
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w apps/web",
+    "build": "npm run build -w apps/web",
+    "start": "npm run start -w apps/web",
+    "lint": "npm run lint -w apps/web",
+    "test": "npm run test -w apps/web",
+    "test:watch": "npm run test:watch -w apps/web",
+    "typecheck": "npm run typecheck -w apps/web",
+    "verify": "powershell -ExecutionPolicy Bypass -File scripts/verify.ps1",
+    "eval": "npx tsx golden/run.js",
+    "eval:doc": "npx tsx golden/run.js --mode=document",
+    "eval:bq": "npx tsx golden/run.js --mode=database",
+    "eval:hybrid": "npx tsx golden/run.js --mode=hybrid",
+    "eval:edge": "npx tsx golden/run.js --mode=edge",
+    "test:nl2sql": "node scripts/test-nl2sql.mjs"
+  },
+  "devDependencies": {
+    "turbo": "^2.9.18",
+    "typescript": "^5"
+  }
+}

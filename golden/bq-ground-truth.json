@@ -1,0 +1,202 @@
+[
+  {
+    "question_id": "bq-01",
+    "question": "Top 3 products by revenue",
+    "sql": "SELECT p.product_name, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY p.product_name ORDER BY revenue DESC LIMIT 3",
+    "ground_truth": "1. The North Face Nuptse Jacket - £530.00, 2. Nike Air Force 1 Low - £300.00, 3. Adidas Ultraboost Light - £280.00",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-02",
+    "question": "Brand with most revenue",
+    "sql": "SELECT p.brand, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY p.brand ORDER BY revenue DESC LIMIT 1",
+    "ground_truth": "Nike - £540.00",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-03",
+    "question": "Total orders (delivered + shipped)",
+    "sql": "SELECT COUNT(*) as count FROM analysis-ai-499819.jd_sports.orders WHERE status IN ('delivered', 'shipped')",
+    "ground_truth": "17",
+    "original_ground_truth": "18",
+    "status": "corrected"
+  },
+  {
+    "question_id": "bq-04",
+    "question": "Total quantity sold",
+    "sql": "SELECT SUM(quantity) as total_qty FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')",
+    "ground_truth": "18",
+    "original_ground_truth": "19",
+    "status": "corrected"
+  },
+  {
+    "question_id": "bq-05",
+    "question": "Total revenue (delivered + shipped)",
+    "sql": "SELECT ROUND(SUM(oi.sale_price * oi.quantity), 2) as total_revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')",
+    "ground_truth": "2160.0",
+    "original_ground_truth": "2280.0",
+    "status": "corrected"
+  },
+  {
+    "question_id": "bq-06",
+    "question": "Orders via online channel",
+    "sql": "SELECT COUNT(*) as count FROM analysis-ai-499819.jd_sports.orders WHERE channel = 'online' AND status IN ('delivered', 'shipped')",
+    "ground_truth": "12",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-07",
+    "question": "Online channel revenue",
+    "sql": "SELECT ROUND(SUM(oi.sale_price * oi.quantity), 2) as online_revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.channel = 'online' AND o.status IN ('delivered', 'shipped')",
+    "ground_truth": "1360.0",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-08",
+    "question": "Store revenue",
+    "sql": "SELECT ROUND(SUM(oi.sale_price * oi.quantity), 2) as store_revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.channel = 'store' AND o.status IN ('delivered', 'shipped')",
+    "ground_truth": "800.0",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-09",
+    "question": "Region with highest revenue",
+    "sql": "SELECT o.region, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY o.region ORDER BY revenue DESC LIMIT 1",
+    "ground_truth": "London - £655.00",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-10",
+    "question": "Returns count and return rate",
+    "sql": "SELECT COUNTIF(returned = true) as returned_count, COUNT(*) as total_items, ROUND(COUNTIF(returned = true) / COUNT(*) * 100, 2) as return_rate FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')",
+    "ground_truth": "1 returned out of 17 items, return rate 5.88%",
+    "original_ground_truth": "2 returned out of 18 items, return rate 11.11%",
+    "status": "corrected"
+  },
+  {
+    "question_id": "bq-11",
+    "question": "The North Face Nuptse Jacket stock at Glasgow",
+    "sql": "SELECT i.stock_level, i.reorder_point FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'The North Face Nuptse Jacket' AND i.distribution_center = 'Glasgow'",
+    "ground_truth": "stock_level: 350, reorder_point: 100",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-12",
+    "question": "Highest stock at Manchester DC",
+    "sql": "SELECT p.product_name, i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE i.distribution_center = 'Manchester' ORDER BY i.stock_level DESC LIMIT 1",
+    "ground_truth": "Converse Chuck Taylor - 2,500 units",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-13",
+    "question": "ASICS Gel Kayano 31 stock at Glasgow",
+    "sql": "SELECT i.stock_level, i.reorder_point FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'ASICS Gel Kayano 31' AND i.distribution_center = 'Glasgow'",
+    "ground_truth": "stock_level: 300, reorder_point: 80",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-14",
+    "question": "Total inventory across all DCs",
+    "sql": "SELECT SUM(stock_level) as total_stock FROM analysis-ai-499819.jd_sports.inventory_items",
+    "ground_truth": "12,600 units",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-15",
+    "question": "Region with most delivered+shipped orders",
+    "sql": "SELECT region, COUNT(*) as count FROM analysis-ai-499819.jd_sports.orders WHERE status IN ('delivered', 'shipped') GROUP BY region ORDER BY count DESC LIMIT 1",
+    "ground_truth": "Scotland - 6 orders",
+    "original_ground_truth": "England - 6 orders",
+    "status": "corrected"
+  },
+  {
+    "question_id": "bq-16",
+    "question": "Hoka Clifton 9 RRP and cost price",
+    "sql": "SELECT rrp, cost_price FROM analysis-ai-499819.jd_sports.products WHERE product_name = 'Hoka Clifton 9'",
+    "ground_truth": "RRP: £130.00, cost_price: £72.00",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-17",
+    "question": "The North Face Nuptse Jacket RRP and cost price",
+    "sql": "SELECT rrp, cost_price FROM analysis-ai-499819.jd_sports.products WHERE product_name = 'The North Face Nuptse Jacket'",
+    "ground_truth": "RRP: £265.00, cost_price: £145.00",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-18",
+    "question": "Average sale price",
+    "sql": "SELECT ROUND(AVG(sale_price), 2) as avg_price FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')",
+    "ground_truth": "£121.18",
+    "original_ground_truth": "£120.00",
+    "status": "corrected"
+  },
+  {
+    "question_id": "bq-19",
+    "question": "Lowest-priced active product",
+    "sql": "SELECT brand, product_name, rrp FROM analysis-ai-499819.jd_sports.products WHERE is_active = true ORDER BY rrp ASC LIMIT 1",
+    "ground_truth": "Under Armour - Under Armour Backpack - £45.00",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-20",
+    "question": "Highest-priced active product",
+    "sql": "SELECT brand, product_name, rrp FROM analysis-ai-499819.jd_sports.products WHERE is_active = true ORDER BY rrp DESC LIMIT 1",
+    "ground_truth": "The North Face - The North Face Nuptse Jacket - £265.00",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-21",
+    "question": "Platinum loyalty customers",
+    "sql": "SELECT COUNT(*) as count FROM analysis-ai-499819.jd_sports.users WHERE loyalty_tier = 'platinum'",
+    "ground_truth": "1",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-22",
+    "question": "Most common loyalty tier",
+    "sql": "SELECT loyalty_tier, COUNT(*) as count FROM analysis-ai-499819.jd_sports.users GROUP BY loyalty_tier ORDER BY count DESC",
+    "ground_truth": "gold: 3, silver: 3, standard: 3, platinum: 1 (three-way tie for most common)",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-23",
+    "question": "Nike Air Force 1 Low distribution center and stock",
+    "sql": "SELECT i.distribution_center, i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Nike Air Force 1 Low'",
+    "ground_truth": "Manchester - 2,000 units",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-24",
+    "question": "Hoka Clifton 9 distribution center and stock",
+    "sql": "SELECT i.distribution_center, i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Hoka Clifton 9'",
+    "ground_truth": "Glasgow - 600 units",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  },
+  {
+    "question_id": "bq-25",
+    "question": "Total products count",
+    "sql": "SELECT COUNT(*) as count FROM analysis-ai-499819.jd_sports.products",
+    "ground_truth": "12",
+    "original_ground_truth": "unknown",
+    "status": "correct"
+  }
+]

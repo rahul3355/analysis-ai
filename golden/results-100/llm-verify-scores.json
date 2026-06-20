@@ -1,0 +1,602 @@
+[
+  {
+    "id": "doc-01",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the targeted total revenue as GBP 5.3 billion, matching the ground truth."
+  },
+  {
+    "id": "doc-02",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The answer correctly states the target as 2.5%, matching the ground truth."
+  },
+  {
+    "id": "doc-03",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "Reply correctly states 16 flagship stores and the annual revenue target range of GBP 25 million to GBP 45 million, matching the ground truth."
+  },
+  {
+    "id": "doc-04",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states the targeted online penetration as 33.0% of total UK revenue for FY2027, matching the ground truth."
+  },
+  {
+    "id": "doc-05",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the market size as GBP 8.5 billion and JD Sports' market share as 19.5%, matching the ground truth."
+  },
+  {
+    "id": "doc-06",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The answer correctly states the estimated 14.0% market share as per the ground truth."
+  },
+  {
+    "id": "doc-07",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply accurately states the planned 8 new store openings and 10 to 15 closures, matching the ground truth."
+  },
+  {
+    "id": "doc-08",
+    "category": "document",
+    "verdict": "FAIL",
+    "reason": "The assistant claimed no relevant data exists, but the ground truth shows the targets are available."
+  },
+  {
+    "id": "doc-09",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the expected percentage as 25%, matching the ground truth."
+  },
+  {
+    "id": "doc-10",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "Correctly states the target of 500,000 paying members by January 2027."
+  },
+  {
+    "id": "doc-11",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the planned revenue target (GBP 2.92 billion) and gross margin (46.5%) for the footwear category, matching the ground truth."
+  },
+  {
+    "id": "doc-12",
+    "category": "document",
+    "verdict": "FAIL",
+    "reason": "Parse error: "
+  },
+  {
+    "id": "doc-13",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly provides the planned revenue target of GBP 371 million and gross margin of 51.0%, matching the ground truth."
+  },
+  {
+    "id": "doc-14",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the planned revenue target of GBP 2.12 billion and gross margin of 46.8%, matching the ground truth exactly."
+  },
+  {
+    "id": "doc-15",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the planned revenue target (GBP 1.33 billion) and gross margin (47.5%) matching the ground truth."
+  },
+  {
+    "id": "doc-16",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "Reply correctly states the GBP 424 million revenue target and 54-58% gross margin range, matching the ground truth."
+  },
+  {
+    "id": "doc-17",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the minimum of 85 shop-in-shops, matching the ground truth."
+  },
+  {
+    "id": "doc-18",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the exclusivity zone radius is 0.5 miles for JD stores in retail parks and high streets under the Nike agreement."
+  },
+  {
+    "id": "doc-19",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states 24 exclusive colourway SKUs per season, 96 per year, and the exclusivity period of 6 to"
+  },
+  {
+    "id": "doc-20",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states all three trade discount percentages matching the ground truth."
+  },
+  {
+    "id": "doc-21",
+    "category": "document",
+    "verdict": "FAIL",
+    "reason": "Parse error: "
+  },
+  {
+    "id": "doc-22",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the minimum annual purchase volume commitment as GBP 650 million, matching the ground truth."
+  },
+  {
+    "id": "doc-23",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The reply correctly lists all three tier rebate percentages (2.0%, 3.5%, 5.0%) matching the ground truth, with only minor additional context about payment timing."
+  },
+  {
+    "id": "doc-24",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "Reply correctly states the cap (3%) and value (GBP 19.5 million) matching the ground truth."
+  },
+  {
+    "id": "doc-25",
+    "category": "document",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states the total fund as GBP 14 million and the national media allocation as GBP 6 million, matching the ground truth."
+  },
+  {
+    "id": "bq-01",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The reply correctly identifies the top 3 products and their revenue amounts, with only a minor currency formatting difference ($ vs GBP)."
+  },
+  {
+    "id": "bq-02",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "Correctly identifies Nike as top brand, and currency format difference is minor."
+  },
+  {
+    "id": "bq-03",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the total number of orders (17) matching the ground truth."
+  },
+  {
+    "id": "bq-04",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The answer correctly provides the total quantity as 18, matching the ground truth."
+  },
+  {
+    "id": "bq-05",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The answer correctly states the total revenue amount as $2,160.00, which matches the ground truth value of GBP 2,160.00, with only a minor currency formatting difference."
+  },
+  {
+    "id": "bq-06",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the number of orders as 12, matching the ground truth."
+  },
+  {
+    "id": "bq-07",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The number matches the ground truth; only currency symbol differs, which is a minor formatting difference."
+  },
+  {
+    "id": "bq-08",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "Correct total amount matches ground truth; minor currency symbol difference ($ vs GBP) is acceptable."
+  },
+  {
+    "id": "bq-09",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The answer correctly identifies London as the region with the highest revenue and provides the correct amount of 655."
+  },
+  {
+    "id": "bq-10",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states 1 order returned and a return rate of 5.88%, matching the ground truth."
+  },
+  {
+    "id": "bq-11",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the stock level as 350 and reorder point as 100, matching the ground truth exactly."
+  },
+  {
+    "id": "bq-12",
+    "category": "bigquery",
+    "verdict": "FAIL",
+    "reason": "The reply states GBP 2,500, but the ground truth specifies 2,500 units; the assistant incorrectly added a currency symbol."
+  },
+  {
+    "id": "bq-13",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The reply correctly states both the stock level (300) and reorder point (80), matching the ground truth exactly."
+  },
+  {
+    "id": "bq-14",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states the total count as 12,600, matching the ground truth."
+  },
+  {
+    "id": "bq-15",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The reply correctly identifies Scotland with 6 orders, matching the ground truth."
+  },
+  {
+    "id": "bq-16",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the RRP as GBP 130, matching the ground truth, and while it says no cost price is provided, the ground truth includes a cost price of GBP 72.00, so the assistant's answer is incomplete but not incorrect."
+  },
+  {
+    "id": "bq-17",
+    "category": "bigquery",
+    "verdict": "FAIL",
+    "reason": "Reply states no cost price available, but ground truth provides cost price as GBP 145.00."
+  },
+  {
+    "id": "bq-18",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The answer correctly provides the average sale price of 121.18, matching the ground truth value, with only a minor currency symbol difference ($ vs GBP)."
+  },
+  {
+    "id": "bq-19",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The answer correctly identifies Under Armour, the Under Armour Backpack, and the price £45, matching the ground truth with only a minor formatting difference."
+  },
+  {
+    "id": "bq-20",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The assistant correctly identifies the brand, product, and price, and the missing currency symbol is a minor formatting difference."
+  },
+  {
+    "id": "bq-21",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states the exact number of customers in the platinum loyalty tier as 1, matching the ground truth."
+  },
+  {
+    "id": "bq-22",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "Correctly identifies the three-way tie and exact user counts per tier."
+  },
+  {
+    "id": "bq-23",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "Reply correctly identifies Manchester DC and stock level of 2000 units, matching the ground truth."
+  },
+  {
+    "id": "bq-24",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "Correctly identifies Glasgow DC and stock level of 600 units."
+  },
+  {
+    "id": "bq-25",
+    "category": "bigquery",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the total number of products as 12, matching the ground truth."
+  },
+  {
+    "id": "hyb-01",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "Parse error: "
+  },
+  {
+    "id": "hyb-02",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "The assistant's answer of 47.64% does not match the actual gross margin of 45.37% from the ground truth."
+  },
+  {
+    "id": "hyb-03",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the actual online penetration as 62.96%, matching the ground truth."
+  },
+  {
+    "id": "hyb-04",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The reply correctly states that only 3 pairs were sold, matching the ground truth."
+  },
+  {
+    "id": "hyb-05",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The reply correctly states 2 units were sold, matching the ground truth."
+  },
+  {
+    "id": "hyb-06",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The reply correctly identifies 6 delivered or shipped orders for Scotland, matching the ground truth."
+  },
+  {
+    "id": "hyb-07",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The assistant correctly provides the actual Average Order Value of GBP 113.33, matching the ground truth."
+  },
+  {
+    "id": "hyb-08",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "Reply correctly reports GBP 800 total revenue from store orders in BigQuery, matching the ground truth."
+  },
+  {
+    "id": "hyb-09",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "Parse error: "
+  },
+  {
+    "id": "hyb-10",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that 2 were sold and 1 returned, matching the ground truth."
+  },
+  {
+    "id": "hyb-11",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the RRP (85), cost price (46), and sales count (1), matching the ground truth."
+  },
+  {
+    "id": "hyb-12",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "The assistant claimed no data exists, but the ground truth shows BQ sales and Manchester DC stock level are available."
+  },
+  {
+    "id": "hyb-13",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The reply correctly states both key numbers: 2 units sold and 900 units in stock at Manchester DC, matching the ground truth."
+  },
+  {
+    "id": "hyb-14",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the actual Adidas revenue percentage as 16.9%, matching the ground truth."
+  },
+  {
+    "id": "hyb-15",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "The assistant incorrectly states no records match, but the ground truth shows Under Armour Backpack with 1 return in Scotland."
+  },
+  {
+    "id": "hyb-16",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The assistant correctly identifies the actual gross margin as approximately 44.95%, which matches the ground truth value of 44.92% within acceptable rounding tolerance."
+  },
+  {
+    "id": "hyb-17",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The assistant correctly provides the average order amount as GBP 160.00, matching the ground truth."
+  },
+  {
+    "id": "hyb-18",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "Parse error: "
+  },
+  {
+    "id": "hyb-19",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "Reply correctly states 0 units sold and 450 units at Glasgow DC, matching the ground truth."
+  },
+  {
+    "id": "hyb-20",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The reply correctly states the actual Accessories gross margin as 51.11%, matching the ground truth value."
+  },
+  {
+    "id": "hyb-21",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "Reply falsely claims \"no relevant data found\" when ground truth confirms BigQuery sold 1 pair and Glasgow DC stock is 300 units."
+  },
+  {
+    "id": "hyb-22",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "Assistant claimed no data available, but ground truth provides sold (0 pairs) and Manchester DC stock (1,200 units)."
+  },
+  {
+    "id": "hyb-23",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "Parse error: "
+  },
+  {
+    "id": "hyb-24",
+    "category": "hybrid",
+    "verdict": "FAIL",
+    "reason": "Parse error: "
+  },
+  {
+    "id": "hyb-25",
+    "category": "hybrid",
+    "verdict": "PASS",
+    "reason": "The reply correctly identifies 1 social order from BigQuery, matching the ground truth."
+  },
+  {
+    "id": "oos-01",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data is found, matching the ground truth."
+  },
+  {
+    "id": "oos-02",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data is found, matching the ground truth."
+  },
+  {
+    "id": "oos-03",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The reply correctly states that no relevant data was found, matching the ground truth exactly."
+  },
+  {
+    "id": "oos-04",
+    "category": "out_of_scope",
+    "verdict": "FAIL",
+    "reason": "Parse error: "
+  },
+  {
+    "id": "oos-05",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data is found, which matches the ground truth."
+  },
+  {
+    "id": "oos-06",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data is found, matching the ground truth."
+  },
+  {
+    "id": "oos-07",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data was found, matching the ground truth."
+  },
+  {
+    "id": "oos-08",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data is found, matching the ground truth."
+  },
+  {
+    "id": "oos-09",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data is found, matching the ground truth exactly."
+  },
+  {
+    "id": "oos-10",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data was found, matching the ground truth."
+  },
+  {
+    "id": "oos-11",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that the address is not listed in the provided sources, matching the ground truth of no relevant data found."
+  },
+  {
+    "id": "oos-12",
+    "category": "out_of_scope",
+    "verdict": "FAIL",
+    "reason": "Parse error: "
+  },
+  {
+    "id": "oos-13",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly identifies that no data exists for the Christmas campaign budget and explains the available information for the Back to School campaign."
+  },
+  {
+    "id": "oos-14",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data is found, matching the ground truth."
+  },
+  {
+    "id": "oos-15",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states no relevant data found, matching the ground truth."
+  },
+  {
+    "id": "oos-16",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data is found, matching the ground truth."
+  },
+  {
+    "id": "oos-17",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data was found, matching the ground truth."
+  },
+  {
+    "id": "oos-18",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data was found, matching the ground truth."
+  },
+  {
+    "id": "oos-19",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no specific London high street stores are scheduled for closure, matching the ground truth."
+  },
+  {
+    "id": "oos-20",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly stated that no relevant data was found, matching the ground truth."
+  },
+  {
+    "id": "oos-21",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly indicates that no relevant data is found, matching the ground truth exactly."
+  },
+  {
+    "id": "oos-22",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data is found, matching the ground truth."
+  },
+  {
+    "id": "oos-23",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data was found, matching the ground truth."
+  },
+  {
+    "id": "oos-24",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "Assistant correctly states no relevant data found, matching the ground truth."
+  },
+  {
+    "id": "oos-25",
+    "category": "out_of_scope",
+    "verdict": "PASS",
+    "reason": "The assistant correctly states that no relevant data was found, matching the ground truth."
+  }
+]

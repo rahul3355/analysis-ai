@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://analysis-ai.internal/sitemap.xml

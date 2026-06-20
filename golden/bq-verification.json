@@ -1,0 +1,184 @@
+{
+  "verification_date": "2026-06-20",
+  "agent": "C",
+  "total_queries": 25,
+  "matches_agent_a": 25,
+  "mismatches": [],
+  "all_results": [
+    {
+      "question_id": "bq-01",
+      "sql": "SELECT p.product_name, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY p.product_name ORDER BY revenue DESC LIMIT 3",
+      "my_result": "[{\"product_name\":\"The North Face Nuptse Jacket\",\"revenue\":\"530.0\"},{\"product_name\":\"Nike Air Force 1 Low\",\"revenue\":\"300.0\"},{\"product_name\":\"Adidas Ultraboost Light\",\"revenue\":\"280.0\"}]",
+      "agent_a_result": "1. The North Face Nuptse Jacket - £530.00, 2. Nike Air Force 1 Low - £300.00, 3. Adidas Ultraboost Light - £280.00",
+      "match": true
+    },
+    {
+      "question_id": "bq-02",
+      "sql": "SELECT p.brand, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.products p ON oi.product_id = p.product_id JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY p.brand ORDER BY revenue DESC LIMIT 1",
+      "my_result": "[{\"brand\":\"Nike\",\"revenue\":\"540.0\"}]",
+      "agent_a_result": "Nike - £540.00",
+      "match": true
+    },
+    {
+      "question_id": "bq-03",
+      "sql": "SELECT COUNT(*) as count FROM analysis-ai-499819.jd_sports.orders WHERE status IN ('delivered', 'shipped')",
+      "my_result": "[{\"count\":\"17\"}]",
+      "agent_a_result": "17",
+      "match": true
+    },
+    {
+      "question_id": "bq-04",
+      "sql": "SELECT SUM(quantity) as total_qty FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')",
+      "my_result": "[{\"total_qty\":\"18\"}]",
+      "agent_a_result": "18",
+      "match": true
+    },
+    {
+      "question_id": "bq-05",
+      "sql": "SELECT ROUND(SUM(oi.sale_price * oi.quantity), 2) as total_revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')",
+      "my_result": "[{\"total_revenue\":\"2160.0\"}]",
+      "agent_a_result": "2160.0",
+      "match": true
+    },
+    {
+      "question_id": "bq-06",
+      "sql": "SELECT COUNT(*) as count FROM analysis-ai-499819.jd_sports.orders WHERE channel = 'online' AND status IN ('delivered', 'shipped')",
+      "my_result": "[{\"count\":\"12\"}]",
+      "agent_a_result": "12",
+      "match": true
+    },
+    {
+      "question_id": "bq-07",
+      "sql": "SELECT ROUND(SUM(oi.sale_price * oi.quantity), 2) as online_revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.channel = 'online' AND o.status IN ('delivered', 'shipped')",
+      "my_result": "[{\"online_revenue\":\"1360.0\"}]",
+      "agent_a_result": "1360.0",
+      "match": true
+    },
+    {
+      "question_id": "bq-08",
+      "sql": "SELECT ROUND(SUM(oi.sale_price * oi.quantity), 2) as store_revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.channel = 'store' AND o.status IN ('delivered', 'shipped')",
+      "my_result": "[{\"store_revenue\":\"800.0\"}]",
+      "agent_a_result": "800.0",
+      "match": true
+    },
+    {
+      "question_id": "bq-09",
+      "sql": "SELECT o.region, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY o.region ORDER BY revenue DESC LIMIT 1",
+      "my_result": "[{\"region\":\"London\",\"revenue\":\"655.0\"}]",
+      "agent_a_result": "London - £655.00",
+      "match": true
+    },
+    {
+      "question_id": "bq-10",
+      "sql": "SELECT COUNTIF(returned = true) as returned_count, COUNT(*) as total_items, ROUND(COUNTIF(returned = true) / COUNT(*) * 100, 2) as return_rate FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')",
+      "my_result": "[{\"return_rate\":\"5.88\",\"returned_count\":\"1\",\"total_items\":\"17\"}]",
+      "agent_a_result": "1 returned out of 17 items, return rate 5.88%",
+      "match": true
+    },
+    {
+      "question_id": "bq-11",
+      "sql": "SELECT i.stock_level, i.reorder_point FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'The North Face Nuptse Jacket' AND i.distribution_center = 'Glasgow'",
+      "my_result": "[{\"reorder_point\":\"100\",\"stock_level\":\"350\"}]",
+      "agent_a_result": "stock_level: 350, reorder_point: 100",
+      "match": true
+    },
+    {
+      "question_id": "bq-12",
+      "sql": "SELECT p.product_name, i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE i.distribution_center = 'Manchester' ORDER BY i.stock_level DESC LIMIT 1",
+      "my_result": "[{\"product_name\":\"Converse Chuck Taylor\",\"stock_level\":\"2500\"}]",
+      "agent_a_result": "Converse Chuck Taylor - 2,500 units",
+      "match": true
+    },
+    {
+      "question_id": "bq-13",
+      "sql": "SELECT i.stock_level, i.reorder_point FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'ASICS Gel Kayano 31' AND i.distribution_center = 'Glasgow'",
+      "my_result": "[{\"reorder_point\":\"80\",\"stock_level\":\"300\"}]",
+      "agent_a_result": "stock_level: 300, reorder_point: 80",
+      "match": true
+    },
+    {
+      "question_id": "bq-14",
+      "sql": "SELECT SUM(stock_level) as total_stock FROM analysis-ai-499819.jd_sports.inventory_items",
+      "my_result": "[{\"total_stock\":\"12600\"}]",
+      "agent_a_result": "12,600 units",
+      "match": true
+    },
+    {
+      "question_id": "bq-15",
+      "sql": "SELECT region, COUNT(*) as count FROM analysis-ai-499819.jd_sports.orders WHERE status IN ('delivered', 'shipped') GROUP BY region ORDER BY count DESC LIMIT 1",
+      "my_result": "[{\"count\":\"6\",\"region\":\"Scotland\"}]",
+      "agent_a_result": "Scotland - 6 orders",
+      "match": true
+    },
+    {
+      "question_id": "bq-16",
+      "sql": "SELECT rrp, cost_price FROM analysis-ai-499819.jd_sports.products WHERE product_name = 'Hoka Clifton 9'",
+      "my_result": "[{\"cost_price\":\"72.0\",\"rrp\":\"130.0\"}]",
+      "agent_a_result": "RRP: £130.00, cost_price: £72.00",
+      "match": true
+    },
+    {
+      "question_id": "bq-17",
+      "sql": "SELECT rrp, cost_price FROM analysis-ai-499819.jd_sports.products WHERE product_name = 'The North Face Nuptse Jacket'",
+      "my_result": "[{\"cost_price\":\"145.0\",\"rrp\":\"265.0\"}]",
+      "agent_a_result": "RRP: £265.00, cost_price: £145.00",
+      "match": true
+    },
+    {
+      "question_id": "bq-18",
+      "sql": "SELECT ROUND(AVG(sale_price), 2) as avg_price FROM analysis-ai-499819.jd_sports.order_items oi JOIN analysis-ai-499819.jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped')",
+      "my_result": "[{\"avg_price\":\"121.18\"}]",
+      "agent_a_result": "£121.18",
+      "match": true
+    },
+    {
+      "question_id": "bq-19",
+      "sql": "SELECT brand, product_name, rrp FROM analysis-ai-499819.jd_sports.products WHERE is_active = true ORDER BY rrp ASC LIMIT 1",
+      "my_result": "[{\"brand\":\"Under Armour\",\"product_name\":\"Under Armour Backpack\",\"rrp\":\"45.0\"}]",
+      "agent_a_result": "Under Armour - Under Armour Backpack - £45.00",
+      "match": true
+    },
+    {
+      "question_id": "bq-20",
+      "sql": "SELECT brand, product_name, rrp FROM analysis-ai-499819.jd_sports.products WHERE is_active = true ORDER BY rrp DESC LIMIT 1",
+      "my_result": "[{\"brand\":\"The North Face\",\"product_name\":\"The North Face Nuptse Jacket\",\"rrp\":\"265.0\"}]",
+      "agent_a_result": "The North Face - The North Face Nuptse Jacket - £265.00",
+      "match": true
+    },
+    {
+      "question_id": "bq-21",
+      "sql": "SELECT COUNT(*) as count FROM analysis-ai-499819.jd_sports.users WHERE loyalty_tier = 'platinum'",
+      "my_result": "[{\"count\":\"1\"}]",
+      "agent_a_result": "1",
+      "match": true
+    },
+    {
+      "question_id": "bq-22",
+      "sql": "SELECT loyalty_tier, COUNT(*) as count FROM analysis-ai-499819.jd_sports.users GROUP BY loyalty_tier ORDER BY count DESC",
+      "my_result": "[{\"count\":\"3\",\"loyalty_tier\":\"gold\"},{\"count\":\"3\",\"loyalty_tier\":\"silver\"},{\"count\":\"3\",\"loyalty_tier\":\"standard\"},{\"count\":\"1\",\"loyalty_tier\":\"platinum\"}]",
+      "agent_a_result": "gold: 3, silver: 3, standard: 3, platinum: 1 (three-way tie for most common)",
+      "match": true
+    },
+    {
+      "question_id": "bq-23",
+      "sql": "SELECT i.distribution_center, i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Nike Air Force 1 Low'",
+      "my_result": "[{\"distribution_center\":\"Manchester\",\"stock_level\":\"2000\"}]",
+      "agent_a_result": "Manchester - 2,000 units",
+      "match": true
+    },
+    {
+      "question_id": "bq-24",
+      "sql": "SELECT i.distribution_center, i.stock_level FROM analysis-ai-499819.jd_sports.inventory_items i JOIN analysis-ai-499819.jd_sports.products p ON i.product_id = p.product_id WHERE p.product_name = 'Hoka Clifton 9'",
+      "my_result": "[{\"distribution_center\":\"Glasgow\",\"stock_level\":\"600\"}]",
+      "agent_a_result": "Glasgow - 600 units",
+      "match": true
+    },
+    {
+      "question_id": "bq-25",
+      "sql": "SELECT COUNT(*) as count FROM analysis-ai-499819.jd_sports.products",
+      "my_result": "[{\"count\":\"12\"}]",
+      "agent_a_result": "12",
+      "match": true
+    }
+  ]
+}

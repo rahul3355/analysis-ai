@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: analysis-ai
+    runtime: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && ./scripts/render-build.sh
+    startCommand: npm run start -w apps/web
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_ENV
+        value: production
+      - key: PINECONE_API_KEY
+        sync: false
+      - key: PINECONE_INDEX_NAME
+        sync: false
+      - key: PINECONE_INDEX_HOST
+        sync: false
+      - key: EMBEDDING_MODEL
+        sync: false
+      - key: EMBEDDING_DIMENSIONS
+        sync: false
+      - key: RERANKING_MODEL
+        sync: false
+      - key: R2_ENDPOINT
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_BUCKET_NAME
+        sync: false
+      - key: R2_ACCOUNT_ID
+        sync: false
+      - key: GOOGLE_PROJECT_ID
+        sync: false
+      - key: BQ_DATASET_ID
+        sync: false
+      - key: BQ_KEY_CONTENT
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false

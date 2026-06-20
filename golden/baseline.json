@@ -1,0 +1,29 @@
+{
+  "generated": "2026-06-20",
+  "cases": 30,
+  "score": 0,
+  "threshold": 0.7,
+  "perCase": {},
+  "golden100": {
+    "generated": "2026-06-20",
+    "file": "golden-100.json",
+    "total_cases": 100,
+    "categories": {
+      "document": { "total": 25, "confidence": "high" },
+      "bigquery": { "total": 25, "confidence": "high" },
+      "hybrid": { "total": 25, "confidence": "high (24), medium (1)" },
+      "out_of_scope": { "total": 25, "confidence": "high" }
+    },
+    "verification": {
+      "agents": ["A", "B", "C", "D"],
+      "all_agents_match": true,
+      "bq_queries_executed": 72,
+      "doc_facts_verified": 75,
+      "bq_data_snapshot": {
+        "total_orders_delivered_shipped": 17,
+        "total_revenue_gbp": 2160.0,
+        "total_items_sold": 18
+      }
+    }
+  }
+}

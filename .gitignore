@@ -1,0 +1,35 @@
+# Local persisted store for document metadata
+.analysis-ai/
+
+# Build output
+out/
+.next/
+dist/
+
+# Turborepo cache
+.turbo/
+
+# Environment files
+.env.local
+.env*.local
+
+# Environment file example (tracked, not generated)
+!.env.example
+
+# Agent audit artifacts
+.agent-state/
+
+# Dependencies
+node_modules/
+
+# TypeScript build info
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# Runtime caches
+schema-cache.json
+apps/web/src/server/config/sql-cache.json
+
+# Logs
+*.log
+npm-debug.log*

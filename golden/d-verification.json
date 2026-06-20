@@ -1,0 +1,380 @@
+{
+  "verification_date": "2026-06-20",
+  "agent": "D",
+  "hybrid": {
+    "total": 25,
+    "matches_agent_b": 25,
+    "mismatches": [],
+    "summary": "All 25 hybrid questions verified. BQ queries re-run and results match Agent B's reported bq_results exactly. Document fact citations verified against source markdown files with correct line references. All BQ SQL queries are syntactically valid and produce the results claimed. No discrepancies found."
+  },
+  "doc_only": {
+    "total": 25,
+    "all_correct": true,
+    "details": [
+      {
+        "id": "doc-01",
+        "question": "What is the targeted total revenue for JD Sports UK in the FY2027 Annual Sales Plan?",
+        "expected": "GBP 5.3 billion",
+        "source": "doc1-annual-sales-plan.md:13",
+        "verified": true,
+        "notes": "Line 13: 'JD Sports UK targets total revenue of GBP 5.3 billion in FY2027'. Also confirmed at line 151: 'Total revenue: GBP 5,300 million'."
+      },
+      {
+        "id": "doc-02",
+        "question": "What is the like-for-like sales growth target for JD Sports UK in FY2027?",
+        "expected": "2.5%",
+        "source": "doc1-annual-sales-plan.md:13",
+        "verified": true,
+        "notes": "Line 13: 'Like-for-like sales growth is planned at 2.5%'. Also confirmed at line 158."
+      },
+      {
+        "id": "doc-03",
+        "question": "How many flagship stores does JD Sports UK operate, and what is their annual revenue target range?",
+        "expected": "16 flagship stores; each targets between GBP 25 million and GBP 45 million",
+        "source": "doc1-annual-sales-plan.md:37",
+        "verified": true,
+        "notes": "Line 37: 'Sixteen flagship stores... These stores each target between GBP 25 million and GBP 45 million in annual revenue.'"
+      },
+      {
+        "id": "doc-04",
+        "question": "What is the targeted online penetration as a percentage of total UK revenue for FY2027?",
+        "expected": "33.0%",
+        "source": "doc1-annual-sales-plan.md:17",
+        "verified": true,
+        "notes": "Line 17: 'Online penetration is targeted at 33.0% of total UK revenue'. Also confirmed at line 159."
+      },
+      {
+        "id": "doc-05",
+        "question": "What is the estimated UK sportswear market size for FY2027, and what is JD Sports' estimated market share?",
+        "expected": "Market size GBP 8.5 billion; JD share 19.5%",
+        "source": "doc1-annual-sales-plan.md:23",
+        "verified": true,
+        "notes": "Line 23: 'The UK sportswear market is estimated at GBP 8.5 billion for FY2027... JD Sports UK holds an estimated 19.5% market share'."
+      },
+      {
+        "id": "doc-06",
+        "question": "What is Sports Direct's estimated market share in the UK sportswear market?",
+        "expected": "Approximately 14.0%",
+        "source": "doc1-annual-sales-plan.md:23",
+        "verified": true,
+        "notes": "Line 23: 'ahead of Sports Direct (Frasers Group) at approximately 14.0%'."
+      },
+      {
+        "id": "doc-07",
+        "question": "How many new store openings and closures are planned for FY2027?",
+        "expected": "8 new openings; 10 to 15 closures",
+        "source": "doc1-annual-sales-plan.md:41",
+        "verified": true,
+        "notes": "Line 41: 'Eight new stores are planned for FY2027... Approximately 10 to 15 underperforming smaller stores will be closed'."
+      },
+      {
+        "id": "doc-08",
+        "question": "What are the target AOV and conversion rate for the online channel?",
+        "expected": "AOV GBP 82.00; Conversion rate 5.0%",
+        "source": "doc1-annual-sales-plan.md:45",
+        "verified": true,
+        "notes": "Line 45: 'Average order value is targeted at GBP 82.00, with a conversion rate of 5.0%'."
+      },
+      {
+        "id": "doc-09",
+        "question": "What percentage of online orders is expected to be click-and-collect?",
+        "expected": "25%",
+        "source": "doc1-annual-sales-plan.md:47",
+        "verified": true,
+        "notes": "Line 47: 'Click and collect is expected to account for 25% of online orders'."
+      },
+      {
+        "id": "doc-10",
+        "question": "What is the target number of paying members for JD Status loyalty programme by January 2027?",
+        "expected": "500,000 members",
+        "source": "doc1-annual-sales-plan.md:47",
+        "verified": true,
+        "notes": "Line 47: 'target of 500,000 paying members by January 2027'. Also line 137."
+      },
+      {
+        "id": "doc-11",
+        "question": "What is the planned revenue and gross margin for footwear?",
+        "expected": "GBP 2.92 billion; 46.5%",
+        "source": "doc1-annual-sales-plan.md:55",
+        "verified": true,
+        "notes": "Line 55: 'GBP 2.92 billion target. Gross margin of 46.5%.'"
+      },
+      {
+        "id": "doc-12",
+        "question": "What is the planned revenue and gross margin for apparel?",
+        "expected": "GBP 2.01 billion; 49.5%",
+        "source": "doc1-annual-sales-plan.md:63",
+        "verified": true,
+        "notes": "Line 63: 'GBP 2.01 billion target. Gross margin of 49.5%.'"
+      },
+      {
+        "id": "doc-13",
+        "question": "What is the planned revenue and gross margin for accessories?",
+        "expected": "GBP 371 million; 51.0%",
+        "source": "doc1-annual-sales-plan.md:69",
+        "verified": true,
+        "notes": "Line 69: 'GBP 371 million target. Gross margin of 51.0%.'"
+      },
+      {
+        "id": "doc-14",
+        "question": "What is the planned revenue and gross margin for Nike?",
+        "expected": "GBP 2.12 billion; 46.8%",
+        "source": "doc1-annual-sales-plan.md:77-79",
+        "verified": true,
+        "notes": "Line 77: 'Nike (40% of revenue, GBP 2.12 billion)'. Line 79: 'The planned gross margin on Nike product is 46.8%'."
+      },
+      {
+        "id": "doc-15",
+        "question": "What is the planned revenue and gross margin for Adidas?",
+        "expected": "GBP 1.33 billion; 47.5%",
+        "source": "doc1-annual-sales-plan.md:81-83",
+        "verified": true,
+        "notes": "Line 81: 'Adidas (25% of revenue, GBP 1.33 billion)'. Line 83: 'Planned gross margin is 47.5%.'"
+      },
+      {
+        "id": "doc-16",
+        "question": "What is the planned revenue and gross margin for own-brand products?",
+        "expected": "GBP 424 million; 54% to 58%",
+        "source": "doc1-annual-sales-plan.md:93-95",
+        "verified": true,
+        "notes": "Line 93: 'Own Brand (8% of revenue, GBP 424 million)'. Line 95: 'delivers gross margins of 54% to 58%'."
+      },
+      {
+        "id": "doc-17",
+        "question": "How many shop-in-shops does JD Sports commit to operate for Nike by end of year two?",
+        "expected": "Minimum 85",
+        "source": "doc2-nike-agreement.md:25",
+        "verified": true,
+        "notes": "Line 25: 'minimum of 85 shop-in-shops required across the territory by the end of year two'."
+      },
+      {
+        "id": "doc-18",
+        "question": "What is the exclusivity zone radius for JD stores under the Nike agreement?",
+        "expected": "0.5 miles",
+        "source": "doc2-nike-agreement.md:25",
+        "verified": true,
+        "notes": "Line 25: 'no other Nike multi-brand retailer may be located within 0.5 miles of a JD store'."
+      },
+      {
+        "id": "doc-19",
+        "question": "How many exclusive colourway SKUs is JD granted per season under the Nike agreement and what is the exclusivity period?",
+        "expected": "24 per season (96/year); 6 to 12 months",
+        "source": "doc2-nike-agreement.md:29",
+        "verified": true,
+        "notes": "Line 29: '24 exclusive colourway SKUs per season, for a total of 96 exclusive SKUs per year. Exclusivity periods range from 6 to 12 months from first delivery'."
+      },
+      {
+        "id": "doc-20",
+        "question": "What are the trade discounts granted by Nike to JD for core lifestyle, running, and Jordan Brand?",
+        "expected": "Core lifestyle 49%; Running 47%; Premium/Jordan 44%",
+        "source": "doc2-nike-agreement.md:35",
+        "verified": true,
+        "notes": "Line 35: 'trade discount of 49% off... core lifestyle product... Running product is discounted at 47% off RRP. Premium and Jordan Brand product is discounted at 44% off RRP.'"
+      },
+      {
+        "id": "doc-21",
+        "question": "What are the payment and settlement discount terms under the Nike Framework Agreement?",
+        "expected": "60 days from end of month; 2% settlement discount if paid within 30 days",
+        "source": "doc2-nike-agreement.md:37",
+        "verified": true,
+        "notes": "Line 37: 'Payment terms are 60 days from the end of the month of invoice. A 2% settlement discount applies if payment is made within 30 days of invoice date.'"
+      },
+      {
+        "id": "doc-22",
+        "question": "What is the minimum annual purchase volume commitment under the Nike Framework Agreement?",
+        "expected": "GBP 650 million",
+        "source": "doc2-nike-agreement.md:45",
+        "verified": true,
+        "notes": "Line 45: 'JD commits to minimum annual purchases of GBP 650 million at wholesale cost'. Also line 153."
+      },
+      {
+        "id": "doc-23",
+        "question": "What are the rebate rates under the Nike Framework Agreement?",
+        "expected": "600M-649M: 2.0%; 650M-699M: 3.5%; 700M+: 5.0%",
+        "source": "doc2-nike-agreement.md:54",
+        "verified": true,
+        "notes": "Line 54: 'At GBP 600 million to GBP 649 million, the rebate rate is 2.0%... At GBP 650 million to GBP 699 million, the rate is 3.5%. At GBP 700 million and above, the rate increases to 5.0%.'"
+      },
+      {
+        "id": "doc-24",
+        "question": "What is the cap on Nike markdown support and what is the value at planned purchase volumes?",
+        "expected": "3% of annual purchases; GBP 19.5 million",
+        "source": "doc2-nike-agreement.md:70",
+        "verified": true,
+        "notes": "Line 70: 'Nike caps total markdown support at 3% of JD's annual Nike purchases. At the planned purchase volume of GBP 650 million, this cap is GBP 19.5 million per year.'"
+      },
+      {
+        "id": "doc-25",
+        "question": "What is the total annual co-op marketing fund provided by Nike, and how much is allocated to national media?",
+        "expected": "Total GBP 14 million; National media GBP 6 million (Nike 70%, JD 30%)",
+        "source": "doc2-nike-agreement.md:90-92",
+        "verified": true,
+        "notes": "Line 90: 'Nike provides a cooperative marketing fund of GBP 14 million per year'. Line 92: 'National media... accounts for GBP 6 million. Nike contributes 70% and JD contributes 30%.'"
+      }
+    ]
+  },
+  "out_of_scope": {
+    "total": 25,
+    "all_correct": true,
+    "details": [
+      {
+        "id": "oos-01",
+        "question": "Current stock price of JD Sports Fashion plc",
+        "verdict": "cannot_answer",
+        "reason": "No stock price data exists in any document or BQ table. Documents are internal business plans/agreements. BQ tables (orders, products, order_items, inventory_items, users, events) contain transactional mock data only."
+      },
+      {
+        "id": "oos-02",
+        "question": "Current CEO of JD Sports",
+        "verdict": "cannot_answer",
+        "reason": "No mention of 'CEO' in any of the 5 markdown documents. BQ has no employee table."
+      },
+      {
+        "id": "oos-03",
+        "question": "Weather in London during Back to School campaign",
+        "verdict": "cannot_answer",
+        "reason": "Documents mention 'early cold weather' driving sales (doc4 line 31, line 99) but no specific weather data for London or any location."
+      },
+      {
+        "id": "oos-04",
+        "question": "Terms of agreement with Puma",
+        "verdict": "cannot_answer",
+        "reason": "Puma is only listed as one of ~40 'Other Brands' in doc1 line 99. There is no Puma agreement document. No Puma trading terms, discounts, or commitments exist anywhere in the documents."
+      },
+      {
+        "id": "oos-05",
+        "question": "Number of stores in the United States",
+        "verdict": "cannot_answer",
+        "reason": "All documents refer to JD Sports UK and Ireland operations. No mention of US stores, United States, or America. Store count of ~472 refers to UK only."
+      },
+      {
+        "id": "oos-06",
+        "question": "Total global profit last year",
+        "verdict": "cannot_answer",
+        "reason": "No 'global profit' data exists. Documents contain UK-specific financial targets and Q3 performance only. BQ data is mock UK transactional data."
+      },
+      {
+        "id": "oos-07",
+        "question": "Email address of Category Manager for Footwear",
+        "verdict": "cannot_answer",
+        "reason": "doc5 line 5 identifies author as 'Category Manager, Footwear' but no email address is provided. No employee directory exists in any document or BQ table."
+      },
+      {
+        "id": "oos-08",
+        "question": "Brand with highest customer satisfaction",
+        "verdict": "cannot_answer",
+        "reason": "doc5 line 31 notes ASICS 'benefits from high customer satisfaction' but does not provide a ranking or comparison. No comparative satisfaction data exists."
+      },
+      {
+        "id": "oos-09",
+        "question": "Shipping costs for online orders to France",
+        "verdict": "cannot_answer",
+        "reason": "No mention of shipping costs or France in any document. Territory in Nike agreement is UK and Republic of Ireland only. BQ has no shipping cost data."
+      },
+      {
+        "id": "oos-10",
+        "question": "Users acquired through Google Ads in Germany",
+        "verdict": "cannot_answer",
+        "reason": "Google Ads mentioned in doc3 line 63 for BTS campaign budget allocation. BQ users table has 'traffic_source' column but no country-level data. Germany is never mentioned."
+      },
+      {
+        "id": "oos-11",
+        "question": "Address of Glasgow Buchanan Street flagship store",
+        "verdict": "cannot_answer",
+        "reason": "Glasgow Buchanan Street is named as a flagship store (doc1 line 37, line 111; doc4 line 45) but no full postal address is provided."
+      },
+      {
+        "id": "oos-12",
+        "question": "Returns for Nike products in England",
+        "verdict": "cannot_answer",
+        "reason": "Documents mention general return rates (Q3 return rate 22.8%, doc4 line 121) and return shipping terms (doc2 line 110) but no Nike-specific return data by region. BQ shows only 1 return across all data (Under Armour Backpack in Scotland)."
+      },
+      {
+        "id": "oos-13",
+        "question": "Media budget for Christmas marketing campaign",
+        "verdict": "cannot_answer",
+        "reason": "Documents mention Christmas as a trading period (doc1 line 123, doc4 line 143) but do not specify a separate media budget. Only the BTS campaign has a detailed media budget (£3.8M, doc3 line 61)."
+      },
+      {
+        "id": "oos-14",
+        "question": "Product with highest click-through rate on mobile app",
+        "verdict": "cannot_answer",
+        "reason": "No click-through rate data exists in any document. BQ events table has event_type and page but no CTR metrics. Mobile app mentioned in doc1 line 45 and line 143 but no CTR data."
+      },
+      {
+        "id": "oos-15",
+        "question": "Terms of Adidas Framework Agreement",
+        "verdict": "cannot_answer",
+        "reason": "No Adidas framework agreement document exists. Only the Nike agreement (doc2) is provided. Adidas terms are limited to revenue/margin targets in doc1 line 81-83."
+      },
+      {
+        "id": "oos-16",
+        "question": "Store refits planned for Wales in FY2027",
+        "verdict": "cannot_answer",
+        "reason": "doc1 line 139 mentions 12 store refits planned but does not specify locations. Wales is mentioned in doc4 line 53 (overall performance) but no refit plans are specified for any specific region."
+      },
+      {
+        "id": "oos-17",
+        "question": "Name of warehouse manager at Kingwood distribution center",
+        "verdict": "cannot_answer",
+        "reason": "Kingwood DC is mentioned (doc1 line 141, doc3 lines 81/99) but no manager name is given. No employee data exists."
+      },
+      {
+        "id": "oos-18",
+        "question": "Rebate threshold for New Balance products",
+        "verdict": "cannot_answer",
+        "reason": "Rebate structure (doc2 line 54) applies only to Nike under the Framework Agreement. No New Balance agreement or rebate terms exist in documents."
+      },
+      {
+        "id": "oos-19",
+        "question": "Which high street stores scheduled for closure in London",
+        "verdict": "cannot_answer",
+        "reason": "doc1 line 41 mentions 10-15 closures planned but no specific stores or locations are identified. London high street store underperformance noted in doc4 line 41 but no closure list."
+      },
+      {
+        "id": "oos-20",
+        "question": "Target ROAS for TV commercials",
+        "verdict": "cannot_answer",
+        "reason": "BTS campaign media plan (doc3 line 63-69) specifies ROAS targets for Google Ads (4.2x), Meta (5.0x), and TikTok (6.5x) but no TV commercial ROAS target exists. TV budget of £500K noted (doc3 line 69) but no ROAS."
+      },
+      {
+        "id": "oos-21",
+        "question": "Loyalty program members in 'VIP' tier",
+        "verdict": "cannot_answer",
+        "reason": "JD Status loyalty program documented in doc1 lines 47/137 with target of 500K paying members. No 'VIP' tier exists. BQ users table has loyalty_tier column with values: gold, silver, standard, platinum (bq-ground-truth.json bq-21/22)."
+      },
+      {
+        "id": "oos-22",
+        "question": "Total advertising spend on Google Ads in Scotland",
+        "verdict": "cannot_answer",
+        "reason": "Google Ads budget of £1.2M is for the BTS campaign nationally (doc3 line 63). No Scotland-specific breakdown exists. doc4 line 131 mentions 'dedicated regional marketing campaign' for Scotland but no budget figure."
+      },
+      {
+        "id": "oos-23",
+        "question": "Which courier company handles Manchester deliveries",
+        "verdict": "cannot_answer",
+        "reason": "DPD and UPS mentioned as dual-carrier agreement for BTS campaign (doc3 line 113) but no specific assignment to Manchester. Manchester DC mentioned in BQ inventory data but no courier info."
+      },
+      {
+        "id": "oos-24",
+        "question": "Rent cost for London Oxford Street flagship store",
+        "verdict": "cannot_answer",
+        "reason": "London Oxford Street listed as a flagship store (doc1 line 37). No rental or property cost data exists in any document."
+      },
+      {
+        "id": "oos-25",
+        "question": "Items added to shopping carts during Back to School",
+        "verdict": "cannot_answer",
+        "reason": "No shopping cart data exists. BTS campaign document covers revenue targets, stock allocation, and media spend but no cart-level metrics. BQ events table has no 'add_to_cart' or cart-related event types."
+      }
+    ]
+  },
+  "methodology": {
+    "bq_queries_rerun": true,
+    "bq_queries_matched": true,
+    "doc_facts_verified_hybrid": 25,
+    "doc_facts_verified_doc_only": 25,
+    "out_of_scope_verified": 25,
+    "notes": "All BQ queries from Agent B's hybrid output were re-run via bq command-line tool against analysis-ai-499819:jd_sports. Results matched Agent B's reported bq_results in all 25 cases. Document facts were cross-referenced against the 5 source markdown files. Out-of-scope questions were verified via grep searches across all documents and BQ schema inspection."
+  }
+}

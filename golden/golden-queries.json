@@ -1,0 +1,112 @@
+[
+  {
+    "id": "gq-001",
+    "question": "top products by revenue",
+    "sql": "SELECT p.product_name, p.brand, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM jd_sports.order_items oi JOIN jd_sports.products p ON oi.product_id = p.product_id JOIN jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY p.product_name, p.brand ORDER BY revenue DESC LIMIT 5"
+  },
+  {
+    "id": "gq-002",
+    "question": "revenue by region",
+    "sql": "SELECT o.region, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM jd_sports.order_items oi JOIN jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY o.region ORDER BY revenue DESC"
+  },
+  {
+    "id": "gq-003",
+    "question": "top selling products last quarter",
+    "sql": "SELECT p.product_name, p.brand, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM jd_sports.order_items oi JOIN jd_sports.products p ON oi.product_id = p.product_id JOIN jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') AND o.created_at >= '2026-04-01' AND o.created_at < '2026-07-01' GROUP BY p.product_name, p.brand ORDER BY revenue DESC LIMIT 5"
+  },
+  {
+    "id": "gq-004",
+    "question": "average order value",
+    "sql": "SELECT ROUND(AVG(o.total_amount), 2) as average_order_value FROM jd_sports.orders o WHERE o.status IN ('delivered', 'shipped')"
+  },
+  {
+    "id": "gq-005",
+    "question": "customer count by region",
+    "sql": "SELECT u.state, COUNT(DISTINCT u.user_id) as customer_count FROM jd_sports.users u GROUP BY u.state ORDER BY customer_count DESC"
+  },
+  {
+    "id": "gq-006",
+    "question": "return rate by channel",
+    "sql": "SELECT o.channel, ROUND(COUNTIF(oi.returned = true) / COUNT(*) * 100, 2) as return_rate_pct FROM jd_sports.order_items oi JOIN jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY o.channel"
+  },
+  {
+    "id": "gq-007",
+    "question": "products low on stock at Glasgow",
+    "sql": "SELECT p.product_name, i.stock_level, i.reorder_point FROM jd_sports.inventory_items i JOIN jd_sports.products p ON i.product_id = p.product_id WHERE i.distribution_center = 'Glasgow' AND i.stock_level <= i.reorder_point"
+  },
+  {
+    "id": "gq-008",
+    "question": "age group distribution of customers",
+    "sql": "SELECT u.age_group, COUNT(*) as customer_count FROM jd_sports.users u GROUP BY u.age_group ORDER BY customer_count DESC"
+  },
+  {
+    "id": "gq-009",
+    "question": "average discount by product category",
+    "sql": "SELECT p.category, ROUND(AVG(oi.discount_pct), 2) as avg_discount_pct FROM jd_sports.order_items oi JOIN jd_sports.products p ON oi.product_id = p.product_id GROUP BY p.category ORDER BY avg_discount_pct DESC"
+  },
+  {
+    "id": "gq-010",
+    "question": "orders by sales channel",
+    "sql": "SELECT o.channel, COUNT(*) as order_count FROM jd_sports.orders o GROUP BY o.channel ORDER BY order_count DESC"
+  },
+  {
+    "id": "gq-011",
+    "question": "monthly revenue trend",
+    "sql": "SELECT FORMAT_DATE('%Y-%m', o.created_at) as month, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM jd_sports.order_items oi JOIN jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY month ORDER BY month"
+  },
+  {
+    "id": "gq-012",
+    "question": "brand revenue breakdown",
+    "sql": "SELECT p.brand, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM jd_sports.order_items oi JOIN jd_sports.products p ON oi.product_id = p.product_id JOIN jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY p.brand ORDER BY revenue DESC"
+  },
+  {
+    "id": "gq-013",
+    "question": "conversion funnel from page views to purchases",
+    "sql": "SELECT e.event_type, COUNT(*) as event_count FROM jd_sports.events e GROUP BY e.event_type ORDER BY event_count DESC"
+  },
+  {
+    "id": "gq-014",
+    "question": "traffic source that drives most purchases",
+    "sql": "SELECT e.traffic_source, COUNT(*) as purchase_count FROM jd_sports.events e WHERE e.event_type = 'purchase' GROUP BY e.traffic_source ORDER BY purchase_count DESC"
+  },
+  {
+    "id": "gq-015",
+    "question": "revenue by brand and category",
+    "sql": "SELECT p.brand, p.category, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue FROM jd_sports.order_items oi JOIN jd_sports.products p ON oi.product_id = p.product_id JOIN jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY p.brand, p.category ORDER BY revenue DESC"
+  },
+  {
+    "id": "gq-016",
+    "question": "total orders and revenue summary",
+    "sql": "SELECT COUNT(DISTINCT o.order_id) as total_orders, ROUND(SUM(oi.sale_price * oi.quantity), 2) as total_revenue, ROUND(AVG(o.total_amount), 2) as avg_order_value FROM jd_sports.orders o JOIN jd_sports.order_items oi ON o.order_id = oi.order_id WHERE o.status IN ('delivered', 'shipped')"
+  },
+  {
+    "id": "gq-017",
+    "question": "products running category",
+    "sql": "SELECT p.product_id, p.product_name, p.brand, p.rrp FROM jd_sports.products p WHERE p.category = 'Running' ORDER BY p.rrp DESC"
+  },
+  {
+    "id": "gq-018",
+    "question": "loyalty tier breakdown of customers",
+    "sql": "SELECT u.loyalty_tier, COUNT(*) as customer_count FROM jd_sports.users u GROUP BY u.loyalty_tier ORDER BY customer_count DESC"
+  },
+  {
+    "id": "gq-019",
+    "question": "inventory by distribution center",
+    "sql": "SELECT i.distribution_center, p.category, SUM(i.stock_level) as total_stock FROM jd_sports.inventory_items i JOIN jd_sports.products p ON i.product_id = p.product_id GROUP BY i.distribution_center, p.category ORDER BY total_stock DESC"
+  },
+  {
+    "id": "gq-020",
+    "question": "orders by status",
+    "sql": "SELECT o.status, COUNT(*) as order_count FROM jd_sports.orders o GROUP BY o.status ORDER BY order_count DESC"
+  },
+  {
+    "id": "gq-021",
+    "question": "new user signups by traffic source",
+    "sql": "SELECT u.traffic_source, COUNT(*) as signup_count FROM jd_sports.users u GROUP BY u.traffic_source ORDER BY signup_count DESC"
+  },
+  {
+    "id": "gq-022",
+    "question": "top 10 skus by revenue",
+    "sql": "SELECT p.product_name, p.brand, ROUND(SUM(oi.sale_price * oi.quantity), 2) as revenue, SUM(oi.quantity) as units_sold FROM jd_sports.order_items oi JOIN jd_sports.products p ON oi.product_id = p.product_id JOIN jd_sports.orders o ON oi.order_id = o.order_id WHERE o.status IN ('delivered', 'shipped') GROUP BY p.product_name, p.brand ORDER BY revenue DESC LIMIT 10"
+  }
+]
