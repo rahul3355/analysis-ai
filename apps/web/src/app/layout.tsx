@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { SystemStatus } from "@/components/layout/SystemStatus";
 
 const fontDisplay = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -45,6 +46,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col bg-canvas text-ink dark:bg-primary dark:text-on-dark transition-colors duration-200" suppressHydrationWarning>
+        <SystemStatus />
         {children}
         <script
           dangerouslySetInnerHTML={{

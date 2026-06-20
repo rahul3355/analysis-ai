@@ -3,7 +3,6 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { Sidebar } from "@/components/layout/Sidebar";
-import { SystemStatus } from "@/components/layout/SystemStatus";
 import { useDocuments } from "@/hooks/useDocuments";
 
 const ChatView = dynamic(
@@ -25,7 +24,6 @@ export default function Home() {
       <Sidebar currentView={view} onViewChange={setView} />
 
       <main className="flex-1 h-full flex flex-col min-w-0 bg-canvas dark:bg-primary overflow-hidden">
-        <SystemStatus />
         {view === "chat" ? (
           <ChatView documents={documents} />
         ) : (
