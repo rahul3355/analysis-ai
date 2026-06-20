@@ -8,7 +8,6 @@ type ServiceStatus = "ok" | "degraded" | "error";
 
 interface HealthCheck {
   pinecone: ServiceStatus;
-  r2: ServiceStatus;
   openrouter: ServiceStatus;
 }
 
@@ -46,24 +45,6 @@ async function checkPinecone(): Promise<ServiceStatus> {
   }
 }
 
-async function checkR2(): Promise<ServiceStatus> {
-  try {
-    const endpoint = process.env.R2_ENDPOINT;
-    const bucket = process.env.R2_BUCKET_NAME;
-    if (!endpoint || !bucket) return "error";
-    const res = await withTimeout(
-      fetch(`${endpoint}/${bucket}?max-keys=1`, {
-        method: "GET",
-        headers: { Authorization: `AWS4-HMAC-SHA256 Credential=${process.env.R2_ACCESS_KEY_ID}/20260101/auto/s3/aws4_request` },
-      }),
-      CHECK_TIMEOUT_MS
-    );
-    return res.status === 200 || res.status === 403 ? "ok" : "degraded";
-  } catch {
-    return "degraded";
-  }
-}
-
 async function checkOpenRouter(): Promise<ServiceStatus> {
   try {
     const apiKey = process.env.OPENROUTER_API_KEY;
@@ -82,13 +63,12 @@ export async function GET() {
   const elapsed = Date.now() - SERVER_START;
   const uptimeSec = Math.floor(elapsed / 1000);
 
-  const [pinecone, r2, openrouter] = await Promise.all([
+  const [pinecone, openrouter] = await Promise.all([
     checkPinecone(),
-    checkR2(),
     checkOpenRouter(),
   ]);
 
-  const checks: HealthCheck = { pinecone, r2, openrouter };
+  const checks: HealthCheck = { pinecone, openrouter };
   const allOk = Object.values(checks).every((s) => s === "ok");
   const remaining = Math.max(0, ESTIMATED_STARTUP_SEC - uptimeSec);
 

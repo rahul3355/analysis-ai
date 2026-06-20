@@ -11,7 +11,6 @@ interface HealthBadgeProps {
 
 const checkLabels: Record<keyof ServiceChecks, string> = {
   pinecone: "Vector DB",
-  r2: "File Storage",
   openrouter: "LLM Gateway",
 };
 

@@ -6,7 +6,6 @@ export type HealthState = "checking" | "starting" | "active" | "inactive";
 
 export interface ServiceChecks {
   pinecone: string;
-  r2: string;
   openrouter: string;
 }
 
