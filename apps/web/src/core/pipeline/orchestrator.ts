@@ -176,7 +176,8 @@ export async function orchestrate(
   );
 
   if (classification.intent === "UNKNOWN") {
-    writer.status("complete", "No relevant data found.");
+    writer.textDelta("No relevant data found.");
+    writer.status("complete", "Done");
     writer.done();
     return;
   }
@@ -294,7 +295,8 @@ export async function orchestrate(
   }
 
   if (!docContext && !bqText) {
-    writer.status("complete", "No relevant data found.");
+    writer.textDelta("No relevant data found.");
+    writer.status("complete", "Done");
     writer.done();
     return;
   }
