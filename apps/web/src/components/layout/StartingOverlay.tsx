@@ -13,7 +13,6 @@ interface StartingOverlayProps {
 const checkLabels: Record<keyof ServiceChecks, string> = {
   pinecone: "Vector DB",
   r2: "File Storage",
-  bigquery: "BigQuery",
   openrouter: "LLM Gateway",
 };
 

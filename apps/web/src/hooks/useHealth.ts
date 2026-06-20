@@ -7,7 +7,6 @@ export type HealthState = "checking" | "starting" | "active" | "inactive";
 export interface ServiceChecks {
   pinecone: string;
   r2: string;
-  bigquery: string;
   openrouter: string;
 }
 
@@ -34,7 +33,7 @@ export function useHealth() {
     const doFetch = (): Promise<HealthData> => {
       const controller = new AbortController();
       const t = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-      return fetch("/api/health", { cache: "no-store", signal: controller.signal })
+      return fetch("/api/health/services", { cache: "no-store", signal: controller.signal })
         .then((res) => {
           if (!res.ok) throw new Error("health failed");
           return res.json() as Promise<HealthData>;
