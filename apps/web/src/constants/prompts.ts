@@ -1,5 +1,5 @@
 export const EXAMPLE_PROMPTS = [
-  "How did Scotland perform vs plan in Q3 and what drove the underperformance?",
-  "What was the sell-through rate on Hoka running shoes compared to Nike in H1?",
-  "What were our top selling products by revenue and which region drove the most sales?",
+  "What is the targeted total revenue for JD Sports UK in the FY2027 Annual Sales Plan?",
+  "What is the like-for-like sales growth target for JD Sports UK in FY2027?",
+  "How many flagship stores does JD Sports UK operate, and what is their annual revenue target range?",
 ];
