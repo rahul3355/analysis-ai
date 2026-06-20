@@ -12,9 +12,9 @@ function getIsLocalhost(): boolean {
 }
 
 function SystemStatusInner() {
-  const { state, data } = useHealth();
-  if (state === "active" && data) {
-    return <HealthBadge data={data} />;
+  const { state } = useHealth();
+  if (state === "active") {
+    return <HealthBadge />;
   }
   return <StartingOverlay state={state} />;
 }
