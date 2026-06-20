@@ -4,7 +4,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install && npm run build -w apps/web
+    buildCommand: npm ci --include=dev && npm run build -w apps/web
     startCommand: cd apps/web && npx next start
     healthCheckPath: /api/health
     envVars:
