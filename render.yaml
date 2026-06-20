@@ -4,14 +4,12 @@ services:
     runtime: node
     region: oregon
     plan: free
-    buildCommand: npm install && ./scripts/render-build.sh
-    startCommand: npm run start -w apps/web
+    buildCommand: npm install && npm run build -w apps/web
+    startCommand: cd apps/web && npx next start
     healthCheckPath: /api/health
     envVars:
       - key: NODE_VERSION
-        value: 22
-      - key: NODE_ENV
-        value: production
+        value: "22.22.0"
       - key: PINECONE_API_KEY
         sync: false
       - key: PINECONE_INDEX_NAME
