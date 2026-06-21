@@ -58,7 +58,8 @@ export async function executeRagPipeline(input: PipelineInput): Promise<RagPipel
     console.time("rag:rerank");
     const reranked = await rerank(message, rerankDocs, 3);
     console.timeEnd("rag:rerank");
-    topChunks = reranked.map((r) => ({
+    const slicedReranked = reranked.slice(0, 3);
+    topChunks = slicedReranked.map((r) => ({
       ...candidates[r.index],
       rerankerScore: r.relevance_score,
     }));

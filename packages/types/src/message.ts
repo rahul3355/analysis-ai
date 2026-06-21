@@ -9,6 +9,7 @@ export interface Citation {
   confidence?: "HIGH" | "MEDIUM" | "LOW";
   verificationStatus?: "verified" | "unverified" | "hallucinated";
   type: "document" | "bigquery";
+  originalIndex?: number;
 }
 
 export interface Message {

@@ -7,6 +7,8 @@ import { classifyIntentFull, type IntentCategory } from "@/core/pipeline/classif
 import { embed } from "@/server/clients/embeddingClient";
 import type { BigQueryResult } from "@/server/clients/bigqueryClient";
 import { StreamEvent } from "@/lib/sse";
+import { getOpenRouterConfig } from "@/server/config/openrouter";
+import type { SpanData } from "@/lib/trace";
 
 const MIN_RELEVANCE_SCORE = 0.001;
 
@@ -52,6 +54,7 @@ function buildDocCitations(
         documentName: chunk.metadata.documentName,
         relevanceScore: chunk.rerankerScore,
         type: "document",
+        originalIndex: idx + 1,
       });
     }
   }
@@ -77,7 +80,7 @@ function buildBqText(bqVal: BqValue, docChunkCount: number): string {
   return `[${bqIndex}] BigQuery: Query executed successfully. 0 records found matching the criteria.\n\nQuery: ${bqVal.sql}`;
 }
 
-function buildBqCitation(bqVal: BqValue): Citation {
+function buildBqCitation(bqVal: BqValue, docChunkCount: number): Citation {
   return {
     id: crypto.randomUUID?.() ?? `${Date.now()}`,
     sourceId: "bigquery",
@@ -88,6 +91,7 @@ function buildBqCitation(bqVal: BqValue): Citation {
         : `Query returned no rows.\n\n${bqVal.sql}`,
     documentName: "BigQuery Query",
     type: "bigquery",
+    originalIndex: docChunkCount + 1,
   };
 }
 
@@ -157,19 +161,29 @@ function isRowsEmpty(rows: Record<string, unknown>[]): boolean {
 export async function orchestrate(
   input: OrchestrateInput,
   writer: StreamEvent,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  spanData?: SpanData
 ): Promise<void> {
   const docIds = input.documentIds ?? [];
 
   writer.status("classifying", "Analyzing your question...");
 
-  const [embeddings, classification] = await Promise.all([
-    embed([input.message]),
-    classifyIntentFull(input.message),
-  ]);
+  const classifyStart = Date.now();
+  const classifyPromise = classifyIntentFull(input.message);
+  const embedStart = Date.now();
+  const embedPromise = embed([input.message]);
+  const [embeddings, classification] = await Promise.all([embedPromise, classifyPromise]);
   const queryEmbedding = embeddings[0];
+  const embedMs = Date.now() - embedStart;
+  const classifyMs = Date.now() - classifyStart;
 
   checkAborted(signal);
+
+  if (spanData) {
+    spanData.intent = classification.intent;
+    spanData.embedMs = embedMs;
+    spanData.classifyMs = classifyMs;
+  }
 
   console.log(
     `[orchestrate] Intent: ${classification.intent} (stage: ${classification.stage}, confidence: ${classification.confidence.toFixed(2)})`
@@ -189,6 +203,7 @@ export async function orchestrate(
 
   async function execDoc(): Promise<void> {
     writer.status("searching_docs", "Searching documents...");
+    const start = Date.now();
     try {
       docResult = {
         status: "fulfilled",
@@ -198,6 +213,7 @@ export async function orchestrate(
           queryEmbedding,
         }),
       };
+      if (spanData) spanData.ragMs = Date.now() - start;
     } catch (err) {
       docResult = { status: "rejected", reason: err };
     }
@@ -205,11 +221,13 @@ export async function orchestrate(
 
   async function execBq(): Promise<void> {
     writer.status("querying_bq", "Querying database...");
+    const start = Date.now();
     try {
       bqResult = {
         status: "fulfilled",
         value: await executeBqQuestion(input.message, queryEmbedding),
       };
+      if (spanData) spanData.bqMs = Date.now() - start;
     } catch (err) {
       bqResult = { status: "rejected", reason: err };
     }
@@ -315,7 +333,7 @@ export async function orchestrate(
 
   try {
     const streamCallbacks = { onToken: (token: string) => writer.textDelta(token), signal };
-
+    const generateStart = Date.now();
     const completeReply = await processChatWithMessagesStream(
       [
         { role: "system" as const, content: systemPrompt },
@@ -323,11 +341,45 @@ export async function orchestrate(
       ],
       streamCallbacks
     );
+    const generateMs = Date.now() - generateStart;
 
     const docCitations = buildDocCitations(completeReply, docChunks);
     const allCitations: Citation[] = [...docCitations];
     if (bqVal) {
-      allCitations.push(buildBqCitation(bqVal));
+      allCitations.push(buildBqCitation(bqVal, docChunks.length));
+    }
+
+    if (spanData) {
+      const model = getOpenRouterConfig().model;
+      const inputChars = systemPrompt.length + input.message.length;
+      const outputChars = completeReply.length;
+      const inputTokens = Math.ceil(inputChars / 4);
+      const outputTokens = Math.ceil(outputChars / 4);
+      const costPerMInput = 0.14;
+      const costPerMOutput = 0.28;
+      const estimatedCost = (inputTokens * costPerMInput + outputTokens * costPerMOutput) / 1_000_000;
+
+      spanData.model = model;
+      spanData.answerPreview = completeReply;
+      spanData.citationsCount = allCitations.length;
+      spanData.generateMs = generateMs;
+      spanData.estimatedCost = estimatedCost;
+      spanData.promptTokens = inputTokens;
+      spanData.completionTokens = outputTokens;
+      spanData.contextValue = mergedContext;
+
+      const topChunks = docChunks.slice(0, 2).map((c) => ({
+        doc: c.metadata.documentName,
+        score: c.rerankerScore ?? c.score,
+        text: (c.metadata.chunkText ?? "").slice(0, 120),
+      }));
+      if (topChunks.length > 0) {
+        spanData.topSources = JSON.stringify(topChunks);
+      }
+
+      if (bqVal?.sql) {
+        spanData.bqSql = bqVal.sql.length > 300 ? bqVal.sql.slice(0, 300) + "..." : bqVal.sql;
+      }
     }
 
     writer.citations({
@@ -340,6 +392,7 @@ export async function orchestrate(
         pageNumber: c.pageNumber,
         relevanceScore: c.relevanceScore,
         type: c.type as "document" | "bigquery",
+        originalIndex: c.originalIndex,
       })),
     });
 

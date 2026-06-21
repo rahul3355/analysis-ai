@@ -15,9 +15,10 @@ export interface FileError {
 export interface UploadZoneProps {
   onFilesSelected: (files: File[]) => void;
   isLoading?: boolean;
+  onDragEnd?: () => void;
 }
 
-export function UploadZone({ onFilesSelected, isLoading = false }: UploadZoneProps) {
+export function UploadZone({ onFilesSelected, isLoading = false, onDragEnd }: UploadZoneProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const [fileErrors, setFileErrors] = useState<FileError[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -76,6 +77,7 @@ export function UploadZone({ onFilesSelected, isLoading = false }: UploadZonePro
     e.preventDefault();
     e.stopPropagation();
     setIsDragOver(false);
+    onDragEnd?.();
     if (isLoading) return;
     processFiles(Array.from(e.dataTransfer.files));
   };

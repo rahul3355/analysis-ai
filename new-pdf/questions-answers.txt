@@ -1,0 +1,95 @@
+JD Sports UK Sustainability Roadmap 2027 — 25 Questions & Expected Answers
+================================================================================
+All answers are grounded in the document: jd_sports_uk_sustainability_roadmap_2027.pdf
+
+================================================================================
+SECTION 1: DOCUMENT (10 questions — facts from the roadmap)
+================================================================================
+
+Q1. What is the target Scope 1 and 2 greenhouse gas emissions reduction for JD Sports UK by 2030, and what is the baseline year?
+A1. 50% absolute reduction by 2030, versus the FY2019/20 baseline.
+
+Q2. What is JD Sports UK's SBTi-validated emissions reduction target for 2035 across all scopes?
+A2. 67.2% absolute reduction by 2035 across Scope 1, 2, and 3, validated by the Science Based Targets initiative.
+
+Q3. What percentage of JD Sports UK's total carbon footprint does Scope 3 represent, and what is the largest contributor within Scope 3?
+A3. Scope 3 represents 98.6% of total emissions. Purchased goods and services (predominantly product sourcing) accounts for 92% of all Scope 3 emissions.
+
+Q4. What is the total budgeted sustainability investment for the UK business over FY2027 to FY2035?
+A4. GBP 42 million.
+
+Q5. What is the target for LED lighting retrofit completion across the UK store estate, and what is the estimated annual CO2 saving?
+A5. 100% of the UK store estate (430 stores) retrofitted by end of FY2028, saving an estimated 4,200 tCO2e per year.
+
+Q6. What is the target for recycled polyester (rPET) in own-brand products by FY2030 and FY2035?
+A6. 50% of own-brand polyester to be recycled (rPET) by FY2030, rising to 75% by FY2035.
+
+Q7. What is the name of JD Sports UK's proposed nationwide product take-back programme and when will it launch?
+A7. 'JD Re:Wear', launching in March 2028.
+
+Q8. How many UK colleagues must complete the Level 1 sustainability awareness training by the end of FY2027?
+A8. All 8,500 UK colleagues.
+
+Q9. What is the target for packaging weight reduction per dispatched order by FY2030?
+A9. 50% reduction by FY2030 (versus FY2025 baseline of 180 grams per order).
+
+Q10. How many 'Sustainability Champions' are to be trained across the UK store network by FY2028, and what is their dedicated time allocation?
+A10. 500 Sustainability Champions trained, with 2 hours per week dedicated time for in-store sustainability activities.
+
+================================================================================
+SECTION 2: BIGQUERY (0 questions — BQ has no sustainability data)
+================================================================================
+No BigQuery questions apply as the sustainability roadmap content does not correspond to any existing BQ tables.
+
+================================================================================
+SECTION 3: HYBRID (5 questions — cross-reference document with BQ)
+================================================================================
+
+Q11. According to the Sustainability Roadmap, what is the Scope 1 baseline in tCO2e, and how many delivered orders were recorded in BigQuery?
+A11. Doc: 12,400 tCO2e (Scope 1 baseline). BQ: 17 orders.
+
+Q12. What is the Scope 2 baseline according to the roadmap, and what is the total revenue from store-channel orders in BigQuery?
+A12. Doc: 18,600 tCO2e (Scope 2 baseline). BQ: GBP 800.00.
+
+Q13. What is the target for electric vans by FY2030 according to the roadmap, and how many products are listed in the BigQuery products table?
+A13. Doc: 90 electric vans (50% of a 180-vehicle fleet). BQ: 12 products.
+
+Q14. Which UK store is listed as the first repair trial location in the roadmap, and does BigQuery contain any data for that city?
+A14. Doc: The first flagship store listed is London Oxford Street. BQ: London had the highest revenue at GBP 655.00.
+
+Q15. According to the roadmap, what is JD Sports UK's target for recycled polyester in own-brand by FY2030, and what percentage of BigQuery orders were delivered or shipped?
+A15. Doc: 50% own-brand polyester recycled by FY2030. BQ: 17 orders delivered or shipped (out of 23 total).
+
+================================================================================
+SECTION 4: OUT OF SCOPE (10 questions — no relevant data exists)
+================================================================================
+
+Q16. What is the sustainability budget for JD Sports Group's operations in France and Germany?
+A16. No relevant data found.
+
+Q17. Which third-party certification does JD Sports UK hold for its sustainable apparel products?
+A17. No relevant data found.
+
+Q18. How many tonnes of carbon emissions were saved in FY2026 through the sustainable sourcing programme?
+A18. No relevant data found.
+
+Q19. What is the total annual water consumption reduction target for JD Sports UK's supply chain?
+A19. No relevant data found.
+
+Q20. Which chemical substances has JD Sports UK eliminated from its manufacturing processes?
+A20. No relevant data found.
+
+Q21. What is the customer satisfaction score for the JD Re:Wear take-back programme?
+A21. No relevant data found.
+
+Q22. How many suppliers have been audited for environmental compliance under the new ESG scorecard programme?
+A22. No relevant data found.
+
+Q23. What is the target price for the Green Line sustainable capsule collection?
+A23. No relevant data found.
+
+Q24. How many repair transactions were completed in the flagship store trial in FY2029?
+A24. No relevant data found.
+
+Q25. What is JD Sports UK's market share in sustainable sportswear compared to competitors?
+A25. No relevant data found.

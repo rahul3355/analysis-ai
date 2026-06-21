@@ -67,6 +67,7 @@ function formatSqlQuery(raw: string): { summary: string; sql: string } {
 
 function CitationItem({ citation, index }: { citation: Citation; index: number }) {
   const isBigQuery = citation.type === "bigquery";
+  const displayIndex = citation.originalIndex ?? (index + 1);
 
   const { summary, sql: formattedSql } = useMemo(
     () => (isBigQuery ? formatSqlQuery(citation.excerpt) : { summary: "", sql: "" }),
@@ -81,7 +82,7 @@ function CitationItem({ citation, index }: { citation: Citation; index: number }
   return (
     <div className="flex gap-sm items-start text-xs leading-relaxed text-body-muted dark:text-muted">
       <span className="font-mono text-[9px] bg-soft-stone/50 dark:bg-white/10 text-ink dark:text-on-dark px-[5px] py-[1.5px] rounded-xs select-none flex-shrink-0 mt-[2px]">
-        [{index + 1}]
+        [{displayIndex}]
       </span>
 
       <div className="flex-1 min-w-0 flex flex-col gap-1">
@@ -172,9 +173,10 @@ export function SourcesBlock({ citations }: SourcesBlockProps) {
                 Documents
               </div>
               {citations
-                .filter((c) => c.type === "document")
-                .map((citation, i) => (
-                  <CitationItem key={citation.id} citation={citation} index={i} />
+                .map((citation, originalIndex) => ({ citation, originalIndex }))
+                .filter(({ citation }) => citation.type === "document")
+                .map(({ citation, originalIndex }) => (
+                  <CitationItem key={citation.id} citation={citation} index={originalIndex} />
                 ))}
             </>
           )}
@@ -184,9 +186,10 @@ export function SourcesBlock({ citations }: SourcesBlockProps) {
                 Database Queries
               </div>
               {citations
-                .filter((c) => c.type === "bigquery")
-                .map((citation, i) => (
-                  <CitationItem key={citation.id} citation={citation} index={i} />
+                .map((citation, originalIndex) => ({ citation, originalIndex }))
+                .filter(({ citation }) => citation.type === "bigquery")
+                .map(({ citation, originalIndex }) => (
+                  <CitationItem key={citation.id} citation={citation} index={originalIndex} />
                 ))}
             </>
           )}

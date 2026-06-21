@@ -3,6 +3,7 @@ import { orchestrate } from "@/core/pipeline/orchestrator";
 import type { ChatRequest, ApiError } from "@analysis-ai/types";
 import { getUniqueId } from "@/lib/id";
 import { StreamEvent } from "@/lib/sse";
+import { startChatTrace } from "@/lib/trace";
 
 export const maxDuration = 120;
 const MAX_MESSAGE_LENGTH = 10000;
@@ -64,16 +65,18 @@ export async function POST(request: NextRequest) {
     const stream = new ReadableStream({
       async start(controller) {
         const writer = new StreamEvent(controller);
+        const trace = startChatTrace(message);
         try {
           await orchestrate(
             { message, documentIds },
             writer,
-            request.signal
+            request.signal,
+            trace.data
           );
+          trace.end();
         } catch (err) {
+          const raw = err instanceof Error ? err.message : "An unexpected error occurred";
           if (!writer.closed) {
-            const raw =
-              err instanceof Error ? err.message : "An unexpected error occurred";
             const userMsg = raw.toLowerCase().includes("image input")
               ? "This question requires image analysis, which the current AI model doesn't support. Please try a text-based question."
               : raw;
@@ -81,6 +84,7 @@ export async function POST(request: NextRequest) {
             writer.error(userMsg);
             writer.done();
           }
+          trace.end(raw);
         }
       },
     });

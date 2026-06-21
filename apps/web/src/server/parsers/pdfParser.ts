@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
-
-const _require = createRequire(import.meta.url);
+import { pathToFileURL } from "node:url";
+import path from "node:path";
 
 export interface ParseResult {
   text: string;
@@ -16,8 +16,9 @@ let pdfjsModule: any = null;
 async function getPdfjs() {
   if (pdfjsModule) return pdfjsModule;
   const mod = await import("pdfjs-dist/legacy/build/pdf.mjs");
+  const _require = createRequire(path.join(process.cwd(), "package.json"));
   const workerPath = _require.resolve("pdfjs-dist/legacy/build/pdf.worker.mjs");
-  mod.GlobalWorkerOptions.workerSrc = "file:///" + workerPath.replace(/\\/g, "/");
+  mod.GlobalWorkerOptions.workerSrc = pathToFileURL(workerPath).href;
   pdfjsModule = mod;
   return mod;
 }

@@ -12,7 +12,7 @@ export interface HealthData {
 
 const ACTIVE_INTERVAL_MS = 60000;
 const INACTIVE_INTERVAL_MS = 4000;
-const FETCH_TIMEOUT_MS = 8000;
+const FETCH_TIMEOUT_MS = 35000;
 const CACHE_KEY = "health-state";
 
 function readCache(): { state: HealthState; data: HealthData | null } {
