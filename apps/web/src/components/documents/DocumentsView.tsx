@@ -34,6 +34,7 @@ export function DocumentsView({ documents, onUpload, onDelete, isLoading }: Docu
   const [isGlobalDragging, setIsGlobalDragging] = useState(false);
 
   const handleFilesSelected = (files: File[]) => {
+    setIsGlobalDragging(false);
     files.forEach((file) => {
       onUpload(file).catch((err) => console.error("Upload failed:", err));
     });
@@ -94,7 +95,11 @@ export function DocumentsView({ documents, onUpload, onDelete, isLoading }: Docu
     >
       <div className="flex-1 overflow-y-auto p-md md:p-xl flex flex-col items-center">
         <div className="flex flex-col items-center w-full max-w-3xl gap-lg my-auto">
-          <UploadZone onFilesSelected={handleFilesSelected} isLoading={isLoading} />
+          <UploadZone
+            onFilesSelected={handleFilesSelected}
+            isLoading={isLoading}
+            onDragEnd={() => setIsGlobalDragging(false)}
+          />
           <DocumentList documents={mappedDocuments} onDelete={handleDelete} />
         </div>
       </div>

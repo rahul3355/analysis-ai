@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef } from "react";
 import { useHealth } from "@/hooks/useHealth";
 import { HealthBadge } from "./HealthBadge";
 import { StartingOverlay } from "./StartingOverlay";
@@ -20,7 +20,18 @@ function SystemStatusInner() {
 }
 
 export function SystemStatus() {
-  const [isLocalhost] = useState<boolean>(getIsLocalhost);
-  if (isLocalhost) return null;
-  return <SystemStatusInner />;
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container && getIsLocalhost()) {
+      container.style.display = "none";
+    }
+  }, []);
+
+  return (
+    <div ref={containerRef}>
+      <SystemStatusInner />
+    </div>
+  );
 }
