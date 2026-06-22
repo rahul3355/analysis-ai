@@ -68,7 +68,7 @@ export const BQ_TABLE_SCHEMAS: TableSchema[] = [
       { name: "sale_price", type: "FLOAT", description: "Price paid per unit in GBP" },
       { name: "cost", type: "FLOAT", description: "Cost per unit in GBP" },
       { name: "discount_pct", type: "FLOAT", description: "Discount percentage applied" },
-      { name: "returned", type: "BOOL", description: "Whether item was returned by the customer — THIS is the canonical column for return tracking. Use COUNTIF(returned = true) with a JOIN to orders to compute return rates." },
+      { name: "returned", type: "BOOL", description: "Whether item was returned by the customer. Use COUNTIF(returned = true) with a JOIN to orders to compute return rates." },
       { name: "return_reason", type: "STRING", description: "Reason for return if applicable" },
       { name: "created_at", type: "DATE", description: "Order date" },
     ],

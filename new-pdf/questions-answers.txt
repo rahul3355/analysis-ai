@@ -36,10 +36,6 @@ A9. 50% reduction by FY2030 (versus FY2025 baseline of 180 grams per order).
 Q10. How many 'Sustainability Champions' are to be trained across the UK store network by FY2028, and what is their dedicated time allocation?
 A10. 500 Sustainability Champions trained, with 2 hours per week dedicated time for in-store sustainability activities.
 
-================================================================================
-SECTION 2: BIGQUERY (0 questions — BQ has no sustainability data)
-================================================================================
-No BigQuery questions apply as the sustainability roadmap content does not correspond to any existing BQ tables.
 
 ================================================================================
 SECTION 3: HYBRID (5 questions — cross-reference document with BQ)

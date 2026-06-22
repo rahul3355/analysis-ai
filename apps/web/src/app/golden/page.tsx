@@ -7,10 +7,10 @@ import { cn } from "@/lib/cn";
 import {
   Check, FileText, Database, GitMerge, Ban, Download, BookOpen,
   Brain, Search, Route, Workflow, ArrowRight, ArrowDown, Table2,
-  Layers, ChevronRight
+  Layers
 } from "lucide-react";
 import goldenData from "@/data/golden.json";
-import { BQ_TABLE_SCHEMAS, BQ_RELATIONSHIPS } from "@/server/config/bigquery";
+import { BQ_TABLE_SCHEMAS } from "@/server/config/bigquery";
 import type { TableSchema } from "@/server/config/bigquery";
 
 interface GoldenItem {
@@ -93,7 +93,7 @@ export default function GoldenPage() {
   const [activeTab, setActiveTab] = useState("qa");
   const [activeCategory, setActiveCategory] = useState("all");
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [expandedTable, setExpandedTable] = useState<string | null>(null);
+  
 
   const filtered = useMemo(() => {
     if (activeCategory === "all") return items;
@@ -238,9 +238,7 @@ export default function GoldenPage() {
                 <FileText className="w-4 h-4 text-action-blue" />
                 Source Documents
               </h2>
-              <p className="font-body text-sm text-muted mb-md">
-                5 PDF documents ingested into the vector database. Click to download.
-              </p>
+
               <div className="space-y-1">
                 {DOCS.map((doc) => (
                   <a
@@ -264,46 +262,26 @@ export default function GoldenPage() {
                 BigQuery Schema
               </h2>
               <p className="font-body text-sm text-muted mb-md">
-                Dataset <span className="font-mono text-xs bg-soft-stone/50 dark:bg-white/10 px-1.5 py-0.5 rounded-sm">jd_sports</span> &mdash; 6 tables with relationships
+                Dataset <span className="font-mono text-xs bg-soft-stone/50 dark:bg-white/10 px-1.5 py-0.5 rounded-sm">jd_sports</span>
               </p>
 
-              {/* Relationship Diagram */}
-              <div className="mb-lg p-md rounded-sm bg-soft-stone/20 dark:bg-white/5 border border-hairline dark:border-white/10">
-                <h3 className="font-body text-xs font-semibold text-muted uppercase tracking-wider mb-md">Table Relationships</h3>
-                <div className="flex flex-wrap items-center gap-1.5">
-                  {BQ_RELATIONSHIPS.map((rel, i) => (
-                    <span key={i} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-sm bg-soft-stone/40 dark:bg-white/5 text-[11px] font-body text-ink dark:text-on-dark">
-                      <span className="font-mono text-muted">{rel.from}</span>
-                      <span className="text-muted/50 text-[10px]">{rel.type === "many_to_one" ? "∞→1" : "1→∞"}</span>
-                      <ArrowRight className="w-2.5 h-2.5 text-muted/50" />
-                      <span className="font-mono text-muted">{rel.to}</span>
-                      <span className="text-muted/40 text-[10px] font-mono">({rel.via})</span>
-                    </span>
-                  ))}
-                </div>
-              </div>
+
 
               {/* Table Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
                 {TABLES.map((table) => {
-                  const expanded = expandedTable === table.table;
                   return (
                     <div
                       key={table.table}
                       className="rounded-sm border border-hairline dark:border-white/10 bg-canvas dark:bg-primary transition-all duration-150"
                     >
-                      <button
-                        onClick={() => setExpandedTable(expanded ? null : table.table)}
-                        className="w-full flex items-center gap-md px-md py-sm transition-colors duration-150 hover:bg-soft-stone/20 dark:hover:bg-white/5 cursor-pointer"
-                      >
+                      <div className="flex items-center gap-md px-md py-sm">
                         <span className={cn("w-2 h-2 rounded-full shrink-0", table.color)} />
                         <span className="font-mono text-sm font-medium text-ink dark:text-on-dark">{table.table}</span>
                         <span className="text-muted text-xs font-body ml-1">{table.columns.length} columns</span>
-                        <ChevronRight className={cn("w-3.5 h-3.5 text-muted ml-auto transition-transform duration-150", expanded && "rotate-90")} />
-                      </button>
+                      </div>
 
-                      {expanded && (
-                        <div className="px-md pb-sm space-y-0.5 animate-fade-in">
+                      <div className="px-md pb-sm space-y-0.5 animate-fade-in">
                           <div className="grid grid-cols-[1fr_auto] gap-x-md gap-y-0.5 pt-1">
                             {table.columns.map((col) => (
                               <div key={col.name} className="col-span-2 flex items-baseline gap-2 py-[2px]">
@@ -328,7 +306,6 @@ export default function GoldenPage() {
                             </div>
                           )}
                         </div>
-                      )}
                     </div>
                   );
                 })}
