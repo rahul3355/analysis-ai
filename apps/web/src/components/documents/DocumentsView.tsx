@@ -103,6 +103,8 @@ export function DocumentsView({ documents, onUpload, onDelete, isLoading }: Docu
         <div className="flex justify-center mt-auto pt-lg">
           <a
             href="/golden?tab=data"
+            target="_blank"
+            rel="noopener noreferrer"
             className={cn(
               "inline-flex items-center gap-sm px-xl py-sm rounded-md border-2 border-action-blue/70",
               "bg-white dark:bg-transparent",
