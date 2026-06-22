@@ -129,14 +129,14 @@ export function UploadZone({ onFilesSelected, isLoading = false, onDragEnd }: Up
           }
         }}
         className={cn(
-          "w-full border-2 border-dashed rounded-md px-xl py-xxl text-center flex flex-col items-center justify-center select-none",
+          "w-full border-2 border-dashed rounded-md px-xl py-section text-center flex flex-col items-center justify-center select-none",
           "transition-all duration-200 ease-in-out",
           "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-focus-blue focus-visible:border-focus-blue",
           isLoading && "opacity-50 cursor-not-allowed",
           !isLoading && "cursor-pointer",
           isDragOver
-            ? "border-action-blue bg-pale-blue/30 dark:bg-action-blue/10 scale-[1.01] shadow-sm"
-            : "border-hairline/40 dark:border-slate/10 hover:border-action-blue/50 hover:bg-soft-stone/20 dark:hover:bg-white/[0.03] hover:shadow-xs"
+            ? "border-action-blue bg-pale-blue/40 dark:bg-action-blue/15 scale-[1.01] shadow-sm"
+            : "border-action-blue/70 hover:border-action-blue hover:bg-pale-blue/30 dark:hover:bg-action-blue/10 hover:shadow-md"
         )}
         aria-label="Upload PDF or DOCX files"
       >

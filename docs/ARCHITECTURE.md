@@ -1,5 +1,146 @@
 # Analysis AI — Architecture
 
+## System Design Overview
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                                  CLIENT TIER                                        │
+│                                                                                     │
+│  ┌───────────────────────────────────────────────────────────────────────────────┐  │
+│  │  Browser (Next.js 16 App Router · React 19 · Tailwind v4)                    │  │
+│  │                                                                               │  │
+│  │  ┌──────────────┐  ┌──────────────────┐  ┌──────────────────────────────┐   │  │
+│  │  │   Sidebar    │  │   ChatView       │  │   DocumentsView              │   │  │
+│  │  │  · navigation│  │  · MessageThread │  │  · UploadZone                │   │  │
+│  │  │  · dark mode │  │  · InputBar      │  │  · DocumentList              │   │  │
+│  │  └──────────────┘  │  · SourcesBlock  │  └──────────────────────────────┘   │  │
+│  │                     │  · PipelineStatus│                                      │  │
+│  │                     │  · BqPreview     │                                      │  │
+│  │                     └──────────────────┘                                      │  │
+│  └───────────────────────────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+                                          │
+                                    POST /api/chat
+                                  (Server-Sent Events)
+                                          │
+                                          ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                                API LAYER (Next.js Route Handlers)                   │
+│                                                                                     │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌─────────────────────────────────┐  │
+│  │  POST /api/chat  │  │  GET /api/health │  │  /api/documents/*              │  │
+│  │  streaming SSE   │  │  health check    │  │  POST (upload) · GET (list)    │  │
+│  └────────┬─────────┘  └──────────────────┘  │  DELETE (remove) · GET (dl)   │  │
+│           │                                  └─────────────────────────────────┘  │
+└───────────┼─────────────────────────────────────────────────────────────────────────┘
+            │
+            ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                           CORE PIPELINE (orchestrator.ts)                           │
+│                                                                                     │
+│  ┌──────────────────────────────────────────────────────────────────────────────┐  │
+│  │  ① Intent Classification  (classifier.ts)                                    │  │
+│  │                                                                               │  │
+│  │  Pinecone Cache ──► Heuristic Patterns (96 regex) ──► LLM ──► Fallback      │  │
+│  │       (0.95 sim)            (classifierHeuristics.ts)    (deepseek-v4-flash) │  │
+│  │                                                                               │  │
+│  │  Returns: DATABASE │ DOCUMENT │ HYBRID │ UNKNOWN                              │  │
+│  └──────────────────────────────────────────────────────────────────────────────┘  │
+│                                    │                                                 │
+│               ┌────────────────────┼────────────────────┐                            │
+│               ▼                    ▼                    ▼                            │
+│  ┌──────────────────────┐  ┌──────────────────┐  ┌──────────────────────────┐       │
+│  │ ②a DOCUMENT Path    │  │ ②b DATABASE Path │  │ ②c HYBRID (both)       │       │
+│  │                     │  │                  │  │                          │       │
+│  │ executeRagPipeline  │  │ executeBqQuestion│  │ ③ Parallel: RAG + BQ    │       │
+│  │ (pipeline.ts)       │  │ (bigqueryService)│  │   with fallback chains   │       │
+│  └──────────┬──────────┘  └────────┬─────────┘  └──────────────────────────┘       │
+│             │                      │                                                 │
+│             ▼                      ▼                                                 │
+│  ┌──────────────────────┐  ┌──────────────────┐                                     │
+│  │ ③ Context Assembly  │◄─┤ ④ Answer Gen    │                                     │
+│  │  merge doc chunks + │  │  OpenRouter LLM  │                                     │
+│  │  BQ results +       │  │  streaming SSE   │                                     │
+│  │  source indices     │  │  with citations  │                                     │
+│  └──────────────────────┘  └──────────────────┘                                     │
+│                                                                                     │
+│  ┌──────────────────────────────────────────────────────────────────────────────┐  │
+│  │  ⑤ Citation Building  ──►  map [N] markers to source chunks with excerpts  │  │
+│  └──────────────────────────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+            │
+            ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                          EXTERNAL SERVICES TIER                                      │
+│                                                                                     │
+│  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐  ┌───────────────────┐ │
+│  │   OpenRouter   │  │    Pinecone    │  │ Google BigQuery│  │  Cloudflare R2    │ │
+│  │                │  │                │  │                │  │                   │ │
+│  │  · Chat LLM    │  │  · Doc vectors │  │  · jd_sports   │  │  · Document       │ │
+│  │  · Embeddings  │  │  · Intent cache│  │  · 6 tables    │  │    storage        │ │
+│  │  · Reranking   │  │  · BQ schemas  │  │  · NL2SQL      │  │  · Signed URLs    │ │
+│  │  · SQL gen     │  │  · Golden exs  │  │                │  │                   │ │
+│  └────────────────┘  └────────────────┘  └────────────────┘  └───────────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+            │                      │                      │                            │
+            ▼                      ▼                      ▼                            ▼
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                          DATA STORES                                                │
+│                                                                                     │
+│  ┌─────────────────────────┐  ┌──────────────────────────────────────────────────┐  │
+│  │  Local File Stores     │  │  External Databases                               │  │
+│  │                        │  │                                                   │  │
+│  │  · documents.json      │  │  · Pinecone index (analysis-ai)                   │  │
+│  │  · sql-cache.json      │  │    ├─ (default)  → document chunks (1536d)       │  │
+│  │                        │  │    ├─ intent-routing-cache  → cached intents     │  │
+│  └─────────────────────────┘  │    ├─ bq-schemas            → table schemas     │  │
+│                               │    └─ golden-queries        → few-shot SQL      │  │
+│                               │                                                   │  │
+│                               │  · BigQuery (jd_sports dataset)                  │  │
+│                               │    ├─ products · orders · order_items            │  │
+│                               │    ├─ users · inventory_items · events           │  │
+│                               │                                                   │  │
+│                               │  · Cloudflare R2 (analysis-ai-documents)         │  │
+│                               │    └─ documents/{id}/{file}                      │  │
+│                               └──────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                          CROSS-CUTTING CONCERNS                                     │
+│                                                                                     │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌─────────────────────────────────┐  │
+│  │  OpenTelemetry   │  │  Semantic Cache  │  │  Observability (Arize AI)       │  │
+│  │  (lib/trace.ts)  │  │  (cosine sim)    │  │  (optional OTLP export)         │  │
+│  └──────────────────┘  └──────────────────┘  └─────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Request Lifecycle (Chat Query)
+
+```
+User sends message
+        │
+        ▼
+POST /api/chat ──── input validation (uuid, message, documentIds)
+        │
+        ▼
+orchestrate() ───── intent classification (cache → heuristics → LLM)
+        │
+        ├── DOCUMENT  ──► embed query → search Pinecone (topK=40)
+        │                      → rerank (topK=3) → build doc context
+        │
+        ├── DATABASE  ──► semantic cache → select tables (Pinecone)
+        │                      → LLM generates SQL (2 models × 2 attempts)
+        │                      → validate SQL → execute BigQuery → format
+        │
+        ├── HYBRID    ──► both paths in parallel, fallback chains
+        │
+        └── UNKNOWN   ──► reply "I'm not sure how to answer that"
+                │
+                ▼
+    SSE stream ─── status → sources → bq_result → text_delta → citations → done
+```
+
 ## Component Tree
 
 ```

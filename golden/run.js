@@ -29,7 +29,7 @@ console.log("[run.js] Loaded env files:", envRes.loadedEnvFiles.map(f => f.path)
 console.log("[run.js] GOOGLE_PROJECT_ID:", process.env.GOOGLE_PROJECT_ID);
 console.log("[run.js] OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY ? "SET" : "NOT SET");
 
-let orchestrate;
+import { NullWriter, callOrchestrate } from "./test-helpers.js";
 const CASES = JSON.parse(readFileSync(join(__dirname, "test-cases.json"), "utf-8"));
 const BASELINE_PATH = join(__dirname, "baseline.json");
 
@@ -135,9 +135,6 @@ function scoreCase(reply, citations, tc) {
 }
 
 async function main() {
-  const mod = await import("../apps/web/src/core/pipeline/orchestrator.ts");
-  orchestrate = mod.orchestrate;
-
   const args = process.argv.slice(2);
   const modeFlag = args.find(a => a.startsWith("--mode="));
   const mode = modeFlag ? modeFlag.split("=")[1] : "all";
@@ -158,10 +155,7 @@ async function main() {
     process.stdout.write(`  ${tc.id}... `);
 
     try {
-      const result = await orchestrate({
-        message: tc.question,
-        documentIds: tc.documents.length > 0 ? tc.documents : undefined,
-      });
+      const result = await callOrchestrate(tc.question, tc.documents.length > 0 ? tc.documents : undefined);
 
       const score = scoreCase(result.reply, result.citations, tc);
       results.push(score);
