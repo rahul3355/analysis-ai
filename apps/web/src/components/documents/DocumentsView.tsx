@@ -5,7 +5,7 @@ import type { DocumentItem } from "@analysis-ai/types";
 import { Document } from "@analysis-ai/types";
 import { UploadZone } from "./UploadZone";
 import { DocumentList } from "./DocumentList";
-import { UploadCloud, ExternalLink } from "lucide-react";
+import { UploadCloud } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 const ALLOWED_EXTENSIONS = ["pdf", "docx"];
@@ -88,35 +88,15 @@ export function DocumentsView({ documents, onUpload, onDelete, isLoading }: Docu
       onDragLeave={handleGlobalDragLeave}
       onDrop={handleGlobalDrop}
     >
-      <div className="flex-1 overflow-y-auto p-md md:p-xl flex flex-col">
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <UploadZone
-            onFilesSelected={handleFilesSelected}
-            isLoading={isLoading}
-            onDragEnd={() => setIsGlobalDragging(false)}
-          />
-          {mappedDocuments.length > 0 && (
-            <DocumentList documents={mappedDocuments} onDelete={onDelete} />
-          )}
-        </div>
-
-        <div className="flex justify-center mt-auto pt-lg">
-          <a
-            href="/golden?tab=data"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              "inline-flex items-center gap-sm px-xl py-sm rounded-md border-2 border-action-blue/70",
-              "bg-white dark:bg-transparent",
-              "hover:border-action-blue hover:bg-pale-blue/30 dark:hover:bg-action-blue/10 hover:shadow-md",
-              "transition-all duration-200 cursor-pointer select-none",
-              "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-focus-blue"
-            )}
-          >
-            <ExternalLink className="w-4 h-4 text-action-blue" aria-hidden="true" />
-            <span className="font-body text-sm font-medium text-action-blue">View Documents</span>
-          </a>
-        </div>
+      <div className="flex-1 overflow-y-auto p-md md:p-xl flex flex-col items-center justify-center">
+        <UploadZone
+          onFilesSelected={handleFilesSelected}
+          isLoading={isLoading}
+          onDragEnd={() => setIsGlobalDragging(false)}
+        />
+        {mappedDocuments.length > 0 && (
+          <DocumentList documents={mappedDocuments} onDelete={onDelete} />
+        )}
       </div>
 
       {/* Global drag-and-drop overlay */}
