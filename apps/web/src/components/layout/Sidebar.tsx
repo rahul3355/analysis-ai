@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MessageCircleMore, LibraryBig, FlaskConical, ExternalLink, Sun, Moon, ChevronLeft, ChevronRight } from "lucide-react";
+import { MessageCircleMore, LibraryBig, FlaskConical, ExternalLink, Sun, Moon, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Logo } from "./Logo";
 
@@ -119,6 +119,25 @@ export function Sidebar({ currentView, onViewChange }: SidebarProps) {
 
       {/* Bottom Section */}
       <div className="flex flex-col gap-md p-md md:p-lg">
+        {/* Docs link */}
+        <a
+          href="/docs"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cn(
+            "group w-full flex items-center gap-md p-md rounded-sm transition-all duration-150 text-left font-body text-sm",
+            "text-slate hover:bg-soft-stone/30 hover:text-ink dark:text-muted dark:hover:bg-white/5 dark:hover:text-on-dark",
+            "focus:outline-hidden focus-visible:ring-2 focus-visible:ring-focus-blue"
+          )}
+          aria-label="Docs (opens in new tab)"
+        >
+          <BookOpen className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
+          <span className={cn(collapsed ? "hidden" : "hidden md:inline-flex items-center gap-1")}>
+            Docs
+            <ExternalLink className="w-3 h-3 text-muted opacity-0 group-hover:opacity-100 transition-opacity duration-150" aria-hidden="true" />
+          </span>
+        </a>
+
         {/* Test Set link */}
         <a
           href="/golden"

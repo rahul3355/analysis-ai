@@ -235,5 +235,183 @@ nextjs-portal {
   animation: fade-in 200ms ease-out;
 }
 
+/* Docs page markdown prose styles */
+.prose-style h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+:is(.dark) .prose-style h1 {
+  color: var(--color-on-dark);
+}
+
+.prose-style h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--color-hairline);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+}
+
+:is(.dark) .prose-style h2 {
+  color: var(--color-on-dark);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.prose-style h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+}
+
+:is(.dark) .prose-style h3 {
+  color: var(--color-on-dark);
+}
+
+.prose-style p {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+  color: var(--color-ink);
+}
+
+:is(.dark) .prose-style p {
+  color: var(--color-on-dark);
+}
+
+.prose-style ul,
+.prose-style ol {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+  padding-left: 1.5rem;
+  color: var(--color-ink);
+}
+
+:is(.dark) .prose-style ul,
+:is(.dark) .prose-style ol {
+  color: var(--color-on-dark);
+}
+
+.prose-style li {
+  margin-bottom: 0.25rem;
+}
+
+.prose-style ul li {
+  list-style-type: disc;
+}
+
+.prose-style ol li {
+  list-style-type: decimal;
+}
+
+.prose-style code {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  background-color: var(--color-soft-stone);
+  padding: 0.125rem 0.375rem;
+  border-radius: 3px;
+  color: var(--color-ink);
+}
+
+:is(.dark) .prose-style code {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-on-dark);
+}
+
+.prose-style pre {
+  margin-bottom: 1rem;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.prose-style pre code {
+  display: block;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-soft-stone);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-sm);
+}
+
+:is(.dark) .prose-style pre code {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.prose-style strong {
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+:is(.dark) .prose-style strong {
+  color: var(--color-on-dark);
+}
+
+.prose-style table {
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 0.8125rem;
+  border-collapse: collapse;
+}
+
+.prose-style th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--color-hairline);
+  color: var(--color-ink);
+}
+
+:is(.dark) .prose-style th {
+  color: var(--color-on-dark);
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+.prose-style td {
+  padding: 0.375rem 0.75rem;
+  border-bottom: 1px solid var(--color-hairline);
+  color: var(--color-ink);
+}
+
+:is(.dark) .prose-style td {
+  color: var(--color-on-dark);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.prose-style hr {
+  border: none;
+  border-top: 1px solid var(--color-hairline);
+  margin: 1.5rem 0;
+}
+
+:is(.dark) .prose-style hr {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.prose-style blockquote {
+  border-left: 3px solid var(--color-action-blue);
+  margin: 1rem 0;
+  padding: 0.25rem 1rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+:is(.dark) .prose-style blockquote {
+  border-left-color: var(--color-focus-blue);
+}
+
 
 
